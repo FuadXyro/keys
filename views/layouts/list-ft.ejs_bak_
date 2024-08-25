@@ -1,0 +1,184 @@
+<div id="loader-wrapper">
+   <div id="loader"></div>
+   <div class="loader-section section-left"></div>
+   <div class="loader-section section-right"></div>
+</div>
+<div id="loader-wrapper">
+   <div id="loader"></div>
+   <div class="loader-section section-left"></div>
+   <div class="loader-section section-right"></div>
+</div>
+<div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
+<!-- Desktop version -->
+<aside class="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0">
+   <div class="py-4 text-center text-gray-500 dark:text-gray-400">
+      <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="/docs"> ArifzynXD APIs | Dasboard </a>
+      <ul class="mt-6">
+         <li class="relative px-6 py-3">
+            <span class="absolute inset-y-0 left-0 w-1 bg-red-600 rounded-tr-lg rounded-br-lg"
+               aria-hidden="true"></span>
+            <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+               href="/docs">
+            <i class="fa-solid fa-house-crack"></i>
+            <span class="ml-4"> Dashboard </span>
+            </a>
+         </li>
+      </ul>
+      <ul class="mt-6">
+         <li class="relative px-6 py-3">
+            <span class="absolute inset-y-0 left-0 w-1 bg-red-600 rounded-tr-lg rounded-br-lg"
+               aria-hidden="true"></span>
+            <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+               href="/prince">
+            <i class="fa-solid fa-house-crack"></i>
+            <span class="ml-4"> Price </span>
+            </a>
+         </li>
+      </ul>
+      <ul class="mt-6">
+         <% if (list) { %> <% for(key in list) { %> <% if(list.hasOwnProperty(key)) { %>
+         <li class="relative px-6 py-3">
+            <button
+               style="outline: transparent"
+               class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+               @click="<%- list[key]['call'] %>"
+               aria-haspopup="true"
+               >
+            <span class="inline-flex items-center">
+            <i class="fa-solid fa-download"></i>
+            <span class="ml-4"><%= list[key]['name'] %> </span>
+            </span>
+            <i class="<%- list[key]['icon'] %> "></i>
+            </button>
+            <template x-if="<%- list[key]['open'] %>">
+               <ul
+                  x-transition:enter="transition-all ease-in-out duration-300"
+                  x-transition:enter-start="opacity-25 max-h-0"
+                  x-transition:enter-end="opacity-100 max-h-xl"
+                  x-transition:leave="transition-all ease-in-out duration-300"
+                  x-transition:leave-start="opacity-100 max-h-xl"
+                  x-transition:leave-end="opacity-0 max-h-0"
+                  class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900"
+                  aria-label="submenu"
+                  >
+                  <% list[key]['listmenu'].forEach(function(data){ %>
+                  <li
+                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                     >
+                     <a
+                        target="_blank"
+                        class="w-full"
+                        href="<%= data.link %>&apikey=<%= apikey %>"
+                        >
+                     <%= data.name %>
+                     </a>
+                  </li>
+                  <% }); %>
+               </ul>
+            </template>
+         </li>
+         <% } %> <% } %> <% } %>
+         <hr color="white">
+      </ul>
+   </div>
+</aside>
+<!-- Mobile Version -->
+<!-- Backdrop -->
+<div x-show="isSideMenuOpen" x-transition:enter="transition ease-in-out duration-150"
+   x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+   x-transition:leave="transition ease-in-out duration-150" x-transition:leave-start="opacity-100"
+   x-transition:leave-end="opacity-0"
+   class="fixed inset-0 z-10 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"></div>
+<aside class="fixed inset-y-0 z-20 flex-shrink-0 w-64 mt-16 overflow-y-auto bg-white dark:bg-gray-800 md:hidden"
+   x-show="isSideMenuOpen" x-transition:enter="transition ease-in-out duration-150"
+   x-transition:enter-start="opacity-0 transform -translate-x-20" x-transition:enter-end="opacity-100"
+   x-transition:leave="transition ease-in-out duration-150" x-transition:leave-start="opacity-100"
+   x-transition:leave-end="opacity-0 transform -translate-x-20" @click.away="closeSideMenu"
+   @keydown.escape="closeSideMenu">
+   <div class="py-4 text-center text-gray-500 dark:text-gray-400">
+   <a class="ml-6 text-lg text-center font-bold text-gray-800 dark:text-gray-200" href="/docs"> ArifzynXD API
+   </a>
+   <ul class="mt-6">
+      <li class="relative px-6 py-3">
+         <span class="absolute inset-y-0 left-0 w-1 bg-red-600 rounded-tr-lg rounded-br-lg"
+            aria-hidden="true"></span>
+         <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+            href="/docs">
+         <i class="fa-solid fa-house-crack"></i>
+         <span class="ml-4"> Dashboard</span>
+         </a>
+      </li>
+   </ul>
+   <ul class="mt-6">
+      <li class="relative px-6 py-3">
+         <span class="absolute inset-y-0 left-0 w-1 bg-red-600 rounded-tr-lg rounded-br-lg"
+            aria-hidden="true"></span>
+         <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+            href="/prince">
+         <i class="fa-solid fa-shop"></i>
+         <span class="ml-4"> Buy Now</span>
+         </a>
+      </li>
+   </ul>
+   <ul class="mt-6">
+      <li class="relative px-6 py-3">
+         <span class="absolute inset-y-0 left-0 w-1 bg-red-600 rounded-tr-lg rounded-br-lg"
+            aria-hidden="true"></span>
+         <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+            href="https://wa.me/62895347198105">
+         <i class="fa-solid fa-phone"></i>
+         <span class="ml-4"> Contact Me</span>
+         </a>
+      </li>
+   </ul>
+   <hr class="my-5">
+   <ul>
+      <% if (list) { %> <% for(key in list) { %> <% if(list.hasOwnProperty(key)) { %>
+      <li class="relative px-6 py-3">
+         <button
+            style="outline: transparent"
+            class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+            @click="<%- list[key]['call'] %>"
+            aria-haspopup="true"
+            >
+         <span class="inline-flex items-center">
+         <i class="fa-solid fa-download"></i>
+         <span class="ml-4"><%= list[key]['name'] %> </span>
+         </span>
+         <i class="<%- list[key]['icon'] %> "></i>
+         </button>
+         <template x-if="<%- list[key]['open'] %>">
+            <ul
+               x-transition:enter="transition-all ease-in-out duration-300"
+               x-transition:enter-start="opacity-25 max-h-0"
+               x-transition:enter-end="opacity-100 max-h-xl"
+               x-transition:leave="transition-all ease-in-out duration-300"
+               x-transition:leave-start="opacity-100 max-h-xl"
+               x-transition:leave-end="opacity-0 max-h-0"
+               class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900"
+               aria-label="submenu"
+               >
+               <% list[key]['listmenu'].forEach(function(data){ %>
+               <li
+                  class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                  >
+                  <a
+                     target="_blank"
+                     class="w-full"
+                     href="<%= data.link %>&apikey=<%= apikey %>"
+                     >
+                  <%= data.name %>
+                  </a>
+               </li>
+               <% }); %>
+            </ul>
+         </template>
+      </li>
+      <% } %> <% } %> <% } %>
+      <hr color="white">
+   </ul>
+   </template>
+   </li>
+   <hr color="white">
+   </ul>
+</aside>

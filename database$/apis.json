@@ -1,0 +1,34 @@
+{
+  "isPagesMenuOpen": {
+    "open": "isPagesMenuOpen",
+    "call": "togglePagesMenu",
+    "name": "Downloader",
+    "icon": "fa-solid fa-chevron-down",
+    "listmenu": [
+      {
+        "link": "/api/download/ytshort?url=https://youtube.com/shorts/Yes5Ga92OIU?feature=share",
+        "name": "Youtube Short"
+      },
+      {
+        "link": "/api/download/ytmp3?url=https://youtu.be/Nq5rzeJ5Ab4",
+        "name": "YTMP3 Downloader"
+      },
+      {
+        "link": "/api/download/ytmp4?url=https://youtu.be/Nq5rzeJ5Ab4",
+        "name": "YTMP4 Downloader"
+      },
+      {
+        "link": "/api/download/playmp3?url=https://youtu.be/Nq5rzeJ5Ab4",
+        "name": "YT PLAY MP3"
+      },
+      {
+        "link": "/api/download/playmp4?url=https://youtu.be/Nq5rzeJ5Ab4",
+        "name": "YT PLAY MP4"
+      },
+      {
+        "link": "/api/download/joox?query=monolog%20pamungkas",
+        "name": "JOOX"
+      }
+    ]
+  }
+}
