@@ -18,7 +18,7 @@ const apirouter = require("./routing/api");
 const userRouters = require("./routing/users");
 const premiumRouters = require("./routing/premium");
 const app = express();
-const PORT = process.env.PORT || 1912;
+const PORT = process.env.PORT || 8080 || 3000 || 80
 const JSONdb = require("simple-json-db");
 global.db = new JSONdb("./database$/storage.json");
 app.use(
@@ -86,10 +86,11 @@ app.use(function(req, res, next) {
   res.locals.user = req.user || null;
   next();
 });
-
+/*
 app.get("/", (req, res) => {
   res.sendFile(process.cwd() + "/views/index.html");
 })
+*/
 app.get("/", (req, res) => {
   res.sendFile(process.cwd() + "/views/home.html");
 });
