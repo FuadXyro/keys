@@ -87,9 +87,9 @@ app.use(function(req, res, next) {
   next();
 });
 
-/*app.get("/", async (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile(process.cwd() + "/views/index.html");
-});*/
+})
 app.get("/", (req, res) => {
   res.sendFile(process.cwd() + "/views/home.html");
 });
