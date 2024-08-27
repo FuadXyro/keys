@@ -10,9 +10,9 @@ message = "We see that you are using require(...) inside your code. We currently
 channel = "stable-22_11"
 
 [env]
-XDG_CONFIG_HOME = "$REPL_HOME/.config"
-PATH = "$REPL_HOME/.config/npm/node_global/bin:$REPL_HOME/node_modules/.bin"
-npm_config_prefix = "$REPL_HOME/.config/npm/node_global"
+XDG_CONFIG_HOME = "/home/runner/$REPL_SLUG/.config"
+PATH = "/home/runner/$REPL_SLUG/.config/npm/node_global/bin:/home/runner/$REPL_SLUG/node_modules/.bin"
+npm_config_prefix = "/home/runner/$REPL_SLUG/.config/npm/node_global"
 
 [gitHubImport]
 requiredFiles = [".replit", "replit.nix", ".config", "package.json", "package-lock.json"]
@@ -78,7 +78,3 @@ start = "typescript-language-server --stdio"
 
 [deployment]
 run = ["sh", "-c", "npm run start"]
-
-[[ports]]
-localPort = 1912
-externalPort = 80
