@@ -1,3196 +1,1202 @@
-require('../controllers/settings');
-require('../controllers/message');
+// Gada reupload" 😏
+// Klo mau colong fitur, jgn asal colong bodoh ntr api eror
 
+// Thanks to ( jgn di hapus jamet)
+/*
+<p> Eka Danuarta</p>
+<p> Ojan</p>
+<p> Farhan</p>
+<p> ZeeoneOfc </p>
+*/
 __path = process.cwd();
 
-const express = require('express');
-const router = express.Router();
-const request = require('request');
-const fs = require('fs');
-const fetch = require('node-fetch');
-const Frieren = require("@xct007/frieren-scraper");
-const { diffusion } = require("@xct007/frieren-scraper");
-const { downloads } = require('scraper-jsc')
-const { search } = require('scraper-jsc')
-const { anime } = require('scraper-jsc')
-const { news } = require('scraper-jsc')
-const { stalk } = require('scraper-jsc')
+require ('../settings.js')
+var express = require('express');
+var axios = require('axios');
+var qs = require('qs');
+var fetch = require('node-fetch');
+var cheerio = require('cheerio');
+var request = require('request');
+var fs = require('fs');
+var router  = express.Router();
+var creator = global.creator
+const listkey = global.apikey
 
-// Lib
+const scr = require ('@bochilteam/scraper')
+const { color, bgcolor } = require(__path + '/lib/color.js');
+const { fetchJson } = require(__path + '/lib/fetcher.js')
+const options = require(__path + '/lib/options.js');
+const { getBuffer } = require(__path + '/lib/functions.js');
+const oxy = require(__path + '/lib/oxy.js');
 
-const {
-    fetchJson,
-    getBuffer
-} = require('../lib/function');
+var {
+	Vokal,
+	Base,
+	Searchnabi,
+    Gempa
+} = require('./../lib');
 
+_ = require('lodash')
 
-// Database
-const {
-    limitMin,
-    isLimit,
-    checkKey
-} = require('../database/function');
+loghandler = {
+	noapikey:{
+		status: 403,
+        message: 'Masukkan parameter apikey',
+        maintanied_by: `${creator}`
+    },
+    error: {
+        status: 503,
+        message: 'Service Unavaible, Sedang dalam perbaikan',
+        maintanied_by: `${creator}`
+    },
+    apikey: {
+    	status: 403,
+    	message: 'Forbiden, Invalid apikey, hubungi saya di whatsapp untuk mendapatkan apikey anda',
+    	maintanied_by: `${creator}`
+    },
+    noturl: {
+    	status: 403,
+    	message: 'Forbiden, Invlid url, masukkan parameter url',
+    	maintanied_by: `${creator}`,
+    }
+}
 
-// Scrape data
-const scrape = require('../scrape/index');
-// API Key
-const keyfree = key_free;
-const keypremium = key_premium;
+var len = 15
+        var arr = '123456789abcdefghijklmnopqrstuvwxyz'
+        var random = '';
 
-// Features
-//Anime
-router.get('/anime/mangatoons', async (req, res, next) => {
-  const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-  const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
- scrape.others.xyro.mangatoons(query).then(data => {
-		let result = data
-		if (!result) res.json(msg.nodata)
+        for (var i = len; i > 0; i--) {
+            random += arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        var lenn = 5
+        var randomlagi = '';
+
+        for (var i = lenn; i > 0; i--) {
+            randomlagi += arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        var randomTextNumber = random+randomlagi+'---------Apriliya-Putri-Fatmawati'+'LOLI--KILLERS';
+        
+router.get('/cekapikey', async (req, res, next) => {
+	var apikey = req.query.apikey
+	if(!apikey) return res.json(loghandler.noapikey)
+	if(listkey.includes(apikey)){
 		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
+			apikey: apikey,
+status: true,
+limit: 'unlimited'
 		})
-	})
- limitMin(apikey);
+		} else {
+			res.json(loghandler.apikey)
+			}
 })
-router.get('/anime/nhentai-get', async (req, res, next) => {
-  const id = req.query.id
-	if (!id) return res.json('Masukan IDnya')
-  const apikey = req.query.apikey
-	if (!apikey) return res.json(msg.paramkey)
-	if (!keypremium.includes(apikey)) return res.render('not-apikey-premium', { layout: 'not-apikey-premium' })
-    
- scrape.others.xyro.nhentaiScraper(id).then(data => {
-		let result = data
-		if (!result) res.json(msg.nodata)
+// cecan
+router.get('/cecan/china', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+         var data =["https://i.postimg.cc/QdncScPQ/1.jpg","https://i.postimg.cc/zv1CK5Q4/10.jpg","https://i.postimg.cc/4x3zzW84/11.jpg","https://i.postimg.cc/pXCfhwJ1/12.jpg","https://i.postimg.cc/brHQRWcr/13.jpg","https://i.postimg.cc/zX8wfzKg/14.jpg","https://i.postimg.cc/QM91zHGR/15.jpg","https://i.postimg.cc/43DVRsXn/16.jpg","https://i.postimg.cc/nrkDmmBQ/17.jpg","https://i.postimg.cc/CLhDgvpC/18.jpg","https://i.postimg.cc/fT8dTxMG/19.jpg","https://i.postimg.cc/RFwfMy0d/2.jpg","https://i.postimg.cc/nrZmM2jJ/20.jpg","https://i.postimg.cc/dVDy7L1L/21.jpg","https://i.postimg.cc/kMF8z0zX/22.jpg","https://i.postimg.cc/VkTbXmr4/23.jpg","https://i.postimg.cc/3wv0BV2h/24.jpg","https://i.postimg.cc/V6PrHgFC/25.jpg","https://i.postimg.cc/MT0MkBsr/26.jpg","https://i.postimg.cc/RhM3v0yC/27.jpg","https://i.postimg.cc/D0BS0T3r/28.jpg","https://i.postimg.cc/VsRrDj0J/29.jpg","https://i.postimg.cc/TY3ySpnC/3.jpg","https://i.postimg.cc/NfCywB4Y/30.jpg","https://i.postimg.cc/3RZRfTRs/31.jpg","https://i.postimg.cc/HnZLH9b3/4.jpg","https://i.postimg.cc/rFsmj7LH/5.jpg","https://i.postimg.cc/4N03Swfx/6.jpg","https://i.postimg.cc/66YqdtFR/7.jpg","https://i.postimg.cc/rwtpXWsC/8.jpg","https://i.postimg.cc/wB8j6vsK/9.jpg"]
+         var result = data[Math.floor(Math.random() * data.length)];
+         var requestSettings = {
+      url: result,
+      method: 'GET',
+      encoding: null
+   };
+   request(requestSettings, function(error, response, body) {
+      res.set('Content-Type', 'image/png');
+      res.send(body);
+   });
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/cecan/vietnam', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+         var data =["https://i.postimg.cc/QdncScPQ/1.jpg","https://i.postimg.cc/zv1CK5Q4/10.jpg","https://i.postimg.cc/4x3zzW84/11.jpg","https://i.postimg.cc/pXCfhwJ1/12.jpg","https://i.postimg.cc/brHQRWcr/13.jpg","https://i.postimg.cc/zX8wfzKg/14.jpg","https://i.postimg.cc/QM91zHGR/15.jpg","https://i.postimg.cc/43DVRsXn/16.jpg","https://i.postimg.cc/nrkDmmBQ/17.jpg","https://i.postimg.cc/CLhDgvpC/18.jpg","https://i.postimg.cc/fT8dTxMG/19.jpg","https://i.postimg.cc/RFwfMy0d/2.jpg","https://i.postimg.cc/nrZmM2jJ/20.jpg","https://i.postimg.cc/dVDy7L1L/21.jpg","https://i.postimg.cc/kMF8z0zX/22.jpg","https://i.postimg.cc/VkTbXmr4/23.jpg","https://i.postimg.cc/3wv0BV2h/24.jpg","https://i.postimg.cc/V6PrHgFC/25.jpg","https://i.postimg.cc/MT0MkBsr/26.jpg","https://i.postimg.cc/RhM3v0yC/27.jpg","https://i.postimg.cc/D0BS0T3r/28.jpg","https://i.postimg.cc/VsRrDj0J/29.jpg","https://i.postimg.cc/TY3ySpnC/3.jpg","https://i.postimg.cc/NfCywB4Y/30.jpg","https://i.postimg.cc/3RZRfTRs/31.jpg","https://i.postimg.cc/HnZLH9b3/4.jpg","https://i.postimg.cc/rFsmj7LH/5.jpg","https://i.postimg.cc/4N03Swfx/6.jpg","https://i.postimg.cc/66YqdtFR/7.jpg","https://i.postimg.cc/rwtpXWsC/8.jpg","https://i.postimg.cc/wB8j6vsK/9.jpg"]
+         var result = data[Math.floor(Math.random() * data.length)];
+         var requestSettings = {
+      url: result,
+      method: 'GET',
+      encoding: null
+   };
+   request(requestSettings, function(error, response, body) {
+      res.set('Content-Type', 'image/png');
+      res.send(body);
+   });
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/cecan/thailand', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+         var data = ["https://i.postimg.cc/PJtYFxrk/1.jpg","https://i.postimg.cc/445zHzB4/10.jpg","https://i.postimg.cc/RFTnfB1p/11.jpg","https://i.postimg.cc/RZ3fY29q/12.jpg","https://i.postimg.cc/jd3PZtpG/13.jpg","https://i.postimg.cc/65qG7F8z/14.jpg","https://i.postimg.cc/T3WL0mqD/15.jpg","https://i.postimg.cc/6q54fmYW/16.jpg","https://i.postimg.cc/rmgKs9cv/17.jpg","https://i.postimg.cc/j2Ld50M7/18.jpg","https://i.postimg.cc/YC12jxzb/19.jpg","https://i.postimg.cc/MHMqw0G0/2.jpg","https://i.postimg.cc/63Hpt5fK/20.jpg","https://i.postimg.cc/zBLGDYtR/21.jpg","https://i.postimg.cc/jdnSYTwV/3.jpg","https://i.postimg.cc/HWykfH8q/4.jpg","https://i.postimg.cc/fycZkzxk/5.jpg","https://i.postimg.cc/MK0KpDDt/6.jpg","https://i.postimg.cc/5NJbTzVz/7.jpg","https://i.postimg.cc/QtWjGkCQ/8.jpg","https://i.postimg.cc/C5TSFBnW/9.jpg"]
+         var result = data[Math.floor(Math.random() * data.length)];
+         var requestSettings = {
+      url: result,
+      method: 'GET',
+      encoding: null
+   };
+   request(requestSettings, function(error, response, body) {
+      res.set('Content-Type', 'image/png');
+      res.send(body);
+   });
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/cecan/indonesia', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+         var data = ["https://i.postimg.cc/sgYy39Yy/1.jpg","https://i.postimg.cc/k5wmbJYp/10.jpg","https://i.postimg.cc/XJJ0KRT7/11.jpg","https://i.postimg.cc/PfCCT9Pj/12.jpg","https://i.postimg.cc/GpbRt8KD/13.jpg","https://i.postimg.cc/gkRr6hVt/14.jpg","https://i.postimg.cc/rsRX3SVB/15.jpg","https://i.postimg.cc/52S0sMkw/16.jpg","https://i.postimg.cc/tTY4RnR5/17.jpg","https://i.postimg.cc/4d7XRCw2/18.jpg","https://i.postimg.cc/k55nwRSm/19.jpg","https://i.postimg.cc/QCcsVp2p/2.jpg","https://i.postimg.cc/zGz5XH0g/20.jpg","https://i.postimg.cc/y8LKJ6br/21.jpg","https://i.postimg.cc/WbjcXJRH/22.jpg","https://i.postimg.cc/m2wfq2B2/23.jpg","https://i.postimg.cc/MGghRnbt/24.jpg","https://i.postimg.cc/1t6bKyvS/25.jpg","https://i.postimg.cc/fyNp21P9/26.jpg","https://i.postimg.cc/J05g9Pwd/27.jpg","https://i.postimg.cc/m2TKQfCx/28.jpg","https://i.postimg.cc/MKtN5Pmn/29.jpg","https://i.postimg.cc/PxGRJBTR/3.jpg","https://i.postimg.cc/cHQ5nXJ4/30.jpg","https://i.postimg.cc/bY9BYCMm/31.jpg","https://i.postimg.cc/QdH4bXMz/32.jpg","https://i.postimg.cc/Rhgd78x9/33.jpg","https://i.postimg.cc/sD2wjV52/34.jpg","https://i.postimg.cc/pXV1mQMR/35.jpg","https://i.postimg.cc/sfmTCBQ8/36.jpg","https://i.postimg.cc/ZRcxmgR3/37.jpg","https://i.postimg.cc/mkgNgwzn/38.jpg","https://i.postimg.cc/pXyJNsth/4.jpg","https://i.postimg.cc/13q0X4Xy/5.jpg","https://i.postimg.cc/DZBLHXjP/7.jpg","https://i.postimg.cc/RhYfVzz3/8.jpg","https://i.postimg.cc/TYZmzG9F/9.jpg"]
+         var result = data[Math.floor(Math.random() * data.length)];
+         var requestSettings = {
+      url: result,
+      method: 'GET',
+      encoding: null
+   };
+   request(requestSettings, function(error, response, body) {
+      res.set('Content-Type', 'image/png');
+      res.send(body);
+   });
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/cecan/korea', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+         var data = ["https://i.postimg.cc/K87Z4CkB/p-19620motq1.jpg","https://i.postimg.cc/wvgR7hjT/p-19623vybj1.jpg","https://i.postimg.cc/QtJ5bfyT/p-19623z95r1.jpg","https://i.postimg.cc/XJbddRQW/p-19624y1on1.jpg","https://i.postimg.cc/dVG0rLX7/p-19625anrs1.jpg","https://i.postimg.cc/9fWc91ZS/p-19625lzea1.jpg","https://i.postimg.cc/SKWzSZqv/p-19626rftx1.jpg","https://i.postimg.cc/hPjxLbbX/p-196298pkr1.jpg","https://i.postimg.cc/hvGJ0cmk/p-1962alh5c1.jpg","https://i.postimg.cc/ZqcKsXJ4/p-1962asjl31.jpg","https://i.postimg.cc/pX6jqhqq/p-1962enqpe1.jpg","https://i.postimg.cc/T1SPqmfb/p-1962gl6nf1.jpg","https://i.postimg.cc/mZVC16Mx/p-1962koqm41.jpg","https://i.postimg.cc/d3zqTYjm/p-1962pvq221.jpg","https://i.postimg.cc/3xQ883R3/p-1962spcdo1.jpg","https://i.postimg.cc/BbZFw2rw/p-1962u3qhb1.jpg","https://i.postimg.cc/nVwMJ8BL/p-1962umwai1.jpg","https://i.postimg.cc/76hDs6Bn/p-1962y8lij1.jpg","https://i.postimg.cc/ydp6s9JG/p-1962yt9ph1.jpg"]
+         var result = data[Math.floor(Math.random() * data.length)];
+         var requestSettings = {
+      url: result,
+      method: 'GET',
+      encoding: null
+   };
+   request(requestSettings, function(error, response, body) {
+      res.set('Content-Type', 'image/png');
+      res.send(body);
+   });
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/cecan/japan', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+         var data = ["https://i.postimg.cc/RCcjLvF6/p-196252lk91.jpg","https://i.postimg.cc/7hMdHncM/p-19625eppj1.jpg","https://i.postimg.cc/CLpwwvZD/p-19629cg431.jpg","https://i.postimg.cc/pVwLpWSm/p-19629eev81.jpg","https://i.postimg.cc/ydxwTRD7/p-1962cau3w1.jpg","https://i.postimg.cc/D0LFqGN8/p-1962ck87p1.jpg","https://i.postimg.cc/76zjcknR/p-1962fyik51.jpg","https://i.postimg.cc/bYtzcXvp/p-1962i85aq1.jpg","https://i.postimg.cc/nLWtgTbX/p-1962nvj4g1.jpg","https://i.postimg.cc/rFGMsSWH/p-1962o5sp41.jpg","https://i.postimg.cc/wTgnWnyW/p-1962p9nlk1.jpg","https://i.postimg.cc/T1XBv4k3/p-1962q7ura1.jpg","https://i.postimg.cc/nz6pj20y/p-1962qiubc1.jpg","https://i.postimg.cc/13CxVMzv/p-1962tt38s1.jpg","https://i.postimg.cc/ZYBqbBwk/p-1962ufc7p1.jpg","https://i.postimg.cc/52x1C6S2/p-1962vn5rc1.jpg","https://i.postimg.cc/GpHWFY8d/p-1962vpyp71.jpg","https://i.postimg.cc/tTc8vg6W/p-1962w2hyp1.jpg"]
+         var result = data[Math.floor(Math.random() * data.length)];
+         var requestSettings = {
+      url: result,
+      method: 'GET',
+      encoding: null
+   };
+   request(requestSettings, function(error, response, body) {
+      res.set('Content-Type', 'image/png');
+      res.send(body);
+   });
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/cecan/malaysia', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+         var data = ["https://i.postimg.cc/L8BFTfV1/p-1962mt0wq1.jpg","https://i.postimg.cc/SKgF0h3Q/p-1962p3bmk1.jpg","https://i.postimg.cc/25tYbYwc/p-1962pac7k1.jpg","https://i.postimg.cc/fRXRhJfz/p-1962qpsvb1.jpg","https://i.postimg.cc/Yq7Hmb6H/p-1962rcc7k1.jpg","https://i.postimg.cc/G3QDZSh7/p-1962v04461.jpg","https://i.postimg.cc/6QttJzQc/p-1962va89q1.jpg","https://i.postimg.cc/t4HHWDFb/p-1962y8nl71.jpg","https://i.postimg.cc/02VB2fZZ/p-1962y8oif1.jpg","https://i.postimg.cc/CMqh8R9j/p-1962yyuuh1.jpg","https://i.postimg.cc/Hn7f77xj/p-19622gld51.jpg","https://i.postimg.cc/Hnpyrb39/p-196240q3o1.jpg","https://i.postimg.cc/wMGj9Nrv/p-19624pvv61.jpg","https://i.postimg.cc/hPXGpCJ7/p-19625n89w1.jpg","https://i.postimg.cc/TwQPHFqn/p-19627bm3c1.jpg","https://i.postimg.cc/zG08NKR1/p-1962c7n2o1.jpg","https://i.postimg.cc/j2XkfQTx/p-1962caiz61.jpg","https://i.postimg.cc/59TJNf06/p-1962csdwa1.jpg","https://i.postimg.cc/6pwptBjC/p-1962d0xml1.jpg","https://i.postimg.cc/PqyhtZpj/p-1962d4cuh1.jpg","https://i.postimg.cc/DZYTGTPp/p-1962grit21.jpg","https://i.postimg.cc/T1LXq4kd/p-1962zgkj21.jpg"]
+         var result = data[Math.floor(Math.random() * data.length)];
+         var requestSettings = {
+      url: result,
+      method: 'GET',
+      encoding: null
+   };
+   request(requestSettings, function(error, response, body) {
+      res.set('Content-Type', 'image/png');
+      res.send(body);
+   });
+} else {
+  res.json(loghandler.apikey)
+}
+})
+
+//downloader
+router.get('/download/facebook', async (req, res, next) => {
+          var apikey = req.query.apikey
+          var url = req.query.url
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter url"})
+        if(listkey.includes(apikey)){
+        const result = await scr.savefrom(url)
+             res.json({
+                 result
+             })
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
+})
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/download/instagram', async (req, res, next) => {
+          var apikey = req.query.apikey
+          var url = req.query.url
+       	if(!apikey) return res.json(loghandler.noapikey)
+       if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter username"})
+        if(listkey.includes(apikey)){
+       let iglu = await scr.instagramdl(url).catch(async _ => await scr.instagramdlv2(url)).catch(async _ => await scr.instagramdlv3(url)).catch(async _ => await scr.instagramdlv4(url))
+		var result = iglu;
 		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
+			result
 		})
-	})
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
 })
-router.get('/anime/nhentai-search', async (req, res, next) => {
-  const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-  const apikey = req.query.apikey
-	if (!apikey) return res.json(msg.paramkey)
-	if (!keypremium.includes(apikey)) return res.render('not-apikey-premium', { layout: 'not-apikey-premium' })
-    
- scrape.others.xyro.nhentaisearch(query).then(data => {
-		let result = data
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
+} else {
+  res.json(loghandler.apikey)
+}
 })
-router.get('/anime/nhentai-detail', async (req, res, next) => {
-  const url = req.query.url
-	if (!url) return res.json(msg.paramurl)
-  const apikey = req.query.apikey
-	if (!apikey) return res.json(msg.paramkey)
-	if (!keypremium.includes(apikey)) return res.render('not-apikey-premium', { layout: 'not-apikey-premium' })
-    
- scrape.others.xyro.nhentai(url).then(data => {
-		let result = data
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-})
-router.get('/anime/nhentai-getimg', async (req, res, next) => {
-  const url = req.query.url
-	if (!url) return res.json(msg.paramurl)
-  const apikey = req.query.apikey
-	if (!apikey) return res.json(msg.paramkey)
-	if (!keypremium.includes(apikey)) return res.render('not-apikey-premium', { layout: 'not-apikey-premium' })
-    
- scrape.others.xyro.nhgetimg(url).then(data => {
-		let result = data
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-})
-router.get('/anime/mal-anime', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    anime.MalSearchAnime(query).then(data => {
-		let aneh = data.result
-		if (!aneh) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: aneh
-		})
-	})
-	limitMin(apikey);
-})
-router.get('/anime/mal-manga', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    anime.MalSearchManga(query).then(data => {
-		let aneh = data.result
-		if (!aneh) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: aneh
-		})
-	})
-	limitMin(apikey);
-})
-router.get('/anime/hentai', async (req, res, next) => {
-const apikey = req.query.apikey
-	if (!apikey) return res.json(msg.paramkey)
-	if (!keypremium.includes(apikey)) return res.render('not-apikey-premium', { layout: 'not-apikey-premium' })
-    
-  xorizn = await fetchJson(`https://xorizn-apis-v1.vercel.app/api/random/hentai`).then(data => {
-		let aneh = data.result
-		if (!aneh) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: aneh
-		})
-	})
-})
-router.get('/anime/nekopoi', async (req, res, next) => {
-const apikey = req.query.apikey
-	if (!apikey) return res.json(msg.paramkey)
-	if (!keypremium.includes(apikey)) return res.render('not-apikey-premium', { layout: 'not-apikey-premium' })
-    
-  xorizn = await fetchJson(`https://xorizn-apis-v1.vercel.app/api/random/nekopoi`).then(data => {
-		let aneh = data.result
-		if (!aneh) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: aneh
-		})
-	})
-})
-router.get('/anime/character', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-  xorizn = await fetchJson(`https://xorizn-apis-v1.vercel.app/api/myanimelist/character?search=${query}`).then(data => {
-		let aneh = data.result
-		if (!aneh) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: aneh
-		})
-	})
-	limitMin(apikey);
-})
-router.get('/anime/otakudesu-search', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-  Frieren.otakudesu.search(query)
+router.get('/download/pinterest', async (req, res, next) => {
+          var apikey = req.query.apikey
+          var url = req.query.q
+       	if(!apikey) return res.json(loghandler.noapikey)
+       if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter q"})
+        if(listkey.includes(apikey)){
+       scr.pinterest(url)
 	.then(data => {
-		let result = data
-		if (!result) res.json(msg.nodata)
+		var result = data;
 		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
+			result
 		})
-	})
-	limitMin(apikey);
+		})
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
 })
-router.get('/anime/otakudesu-detail', async (req, res, next) => {
-	const url = req.query.url
-	if (!url) return res.json(msg.paramurl)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-  Frieren.otakudesu.detail(url)
-	.then(data => {
-		let result = data
-		if (!result) res.json(msg.nodata)
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/download/tiktok', async (req, res, next) => {
+          var apikey = req.query.apikey
+          var url = req.query.url
+       	if(!apikey) return res.json(loghandler.noapikey)
+       if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter url"})
+        if(listkey.includes(apikey)){
+       let ttlu = await scr.tiktokdl(url).catch(async _ => await scr.tiktokdlv2(url))
+		var result = ttlu;
 		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
+			result
 		})
-	})
-	limitMin(apikey);
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
 })
-router.get('/anime/otakudesu-latest', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-  Frieren.otakudesu.latest()
-	.then(data => {
-		let result = data
-		if (!result) res.json(msg.nodata)
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/download/ytmp3', async (req, res, next) => {
+          var apikey = req.query.apikey
+          var url = req.query.url
+       	if(!apikey) return res.json(loghandler.noapikey)
+       if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter url"})
+        if(listkey.includes(apikey)){
+const { id, thumbnail, audio: _audio, title } = await scr.youtubedlv2(url)
+try {
+for (let i in _audio) {
+audio = _audio[i]
+let kin = await audio.download()
 		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-	limitMin(apikey);
+			id: id,
+			thumbnail: thumbnail,
+			title: title,
+			size: audio.fileSize,
+			download: kin
 })
-  router.get('/anime/komiku-search', async (req, res, next) => {
-    const query = req.query.q
-	  if (!query) return res.json(msg.paramquery)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-  Frieren.komikuId.search(query)
-	.then(data => {
-		let result = data
-		if (!result) res.json(msg.nodata)
+		}} catch {
+         	console.log(e);
+         	res.json(loghandler.error)
+}
+} else {
+  res.json(loghandler.apikey)
+}
+})
+
+router.get('/download/ytmp4', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var url = req.query.url
+       	if(!apikey) return res.json(loghandler.noapikey)
+       if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter url"})
+        if(listkey.includes(apikey)){
+       const { id, thumbnail, video: _video, title } = await scr.youtubedlv2(url)
+try{
+for (let i in _video) {
+video = _video[i]
+let kin = await video.download()
 		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
+			id: id,
+			thumbnail: thumbnail,
+			title: title,
+			size: video.fileSize,
+			download: kin
 		})
-	})
-	limitMin(apikey);
+		}} catch {
+         	console.log(e);
+         	res.json(loghandler.error)
+}
+} else {
+  res.json(loghandler.apikey)
+}
 })
-  router.get('/anime/komiku-detail', async (req, res, next) => {
-    const url = req.query.url
-	  if (!url) return res.json(msg.paramurl)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-  Frieren.komikuId.detail(url)
-	.then(data => {
-		let result = data
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-	limitMin(apikey);
+// news
+router.get('/news/cnn', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var url = req.query.type
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://news-api-zhirrr.vercel.app/v1/cnn-news`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+             res.json({
+                 result
+             })
+         })
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
 })
-router.get('/anime/komiku-latest', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-  Frieren.komikuId.latest()
-	.then(data => {
-		let result = data
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-	limitMin(apikey);
+} else {
+  res.json(loghandler.apikey)
+}
 })
- router.get('/anime/doujin-search', async (req, res, next) => {
-    const query = req.query.q
-	  if (!query) return res.json(msg.paramquery)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-  Frieren.doujindesu.search(query)
-	.then(data => {
-		let result = data
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-	limitMin(apikey);
+router.get('/news/cnbc', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var url = req.query.type
+       	if(!apikey) return res.json(loghandler.noapikey)
+       if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://news-api-zhirrr.vercel.app/v1/cnbc-news`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+             res.json({
+                 result
+             })
+         })
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
 })
-  router.get('/anime/doujin-detail', async (req, res, next) => {
-    const url = req.query.url
-	  if (!url) return res.json(msg.paramurl)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-  Frieren.doujindesu.detail(url)
-	.then(data => {
-		let result = data
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-	limitMin(apikey);
+} else {
+  res.json(loghandler.apikey)
+}
 })
-router.get('/anime/doujin-latest', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-  Frieren.doujindesu.latest()
-	.then(data => {
-		let result = data
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-	limitMin(apikey);
-})  
-//Sfw
-router.get('/sfw/akira', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/akira.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
+router.get('/news/republika', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var url = req.query.type
+       	if(!apikey) return res.json(loghandler.noapikey)
+       if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://news-api-zhirrr.vercel.app/v1/republika-news`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+             res.json({
+                 result
+             })
+         })
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
 })
-router.get('/sfw/anna', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/anna.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
+} else {
+  res.json(loghandler.apikey)
+}
 })
-router.get('/sfw/asuna', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/asuna.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
+router.get('/news/tempo', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var url = req.query.type
+       	if(!apikey) return res.json(loghandler.noapikey)
+       if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter type"})      
+       if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://news-api-zhirrr.vercel.app/v1/tempo-news/${url}`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+             res.json({
+             	author: 'Zeeone',
+                 result
+             })
+         })
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
 })
-router.get('/sfw/ayanokouji', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/ayanokouji.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
+} else {
+  res.json(loghandler.apikey)
+}
 })
-router.get('/sfw/ayuzawa', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/ayuzawa.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
+router.get('/news/antara', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var url = req.query.type
+       	if(!apikey) return res.json(loghandler.noapikey)
+       if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter type"})      
+       if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://news-api-zhirrr.vercel.app/v1/antara-news/${url}`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+             res.json({
+             	author: 'Zeeone',
+                 result
+             })
+         })
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
 })
-router.get('/sfw/bocchi', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/bocchi.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
+} else {
+  res.json(loghandler.apikey)
+}
 })
-router.get('/sfw/chisato', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/chisato.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
+router.get('/news/kumparan', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var url = req.query.type
+       	if(!apikey) return res.json(loghandler.noapikey)
+         if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://news-api-zhirrr.vercel.app/v1/kumparan-news`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+             res.json({
+             	author: 'Zeeone',
+                 result
+             })
+         })
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
 })
-router.get('/sfw/cosplay', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/cosplay.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-router.get('/sfw/elaina', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/elaina.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-router.get('/sfw/ikuyo', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/ikuyo.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-router.get('/sfw/kaela', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/kaela.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-router.get('/sfw/kaguya', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/kaguya.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-router.get('/sfw/kaori', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/kaori.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-router.get('/sfw/kobo', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/kobo.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-router.get('/sfw/kotori', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/kotori.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-router.get('/sfw/loli', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/loli.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-router.get('/sfw/miku', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/miku.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-router.get('/sfw/neko', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/neko.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-router.get('/sfw/rias', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/rias.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-router.get('/sfw/sakura', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/sakura.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-router.get('/sfw/sasuke', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/sasuke.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-router.get('/sfw/shina', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/shina.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-router.get('/sfw/shinka', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/shinka.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-router.get('/sfw/shizuka', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/shizuka.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-router.get('/sfw/shota', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/shota.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-router.get('/sfw/tekina', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/tekina.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-router.get('/sfw/waifu', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/waifu.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-router.get('/sfw/yotsuba', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/yotsuba.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-router.get('/sfw/yumeko', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/sfw/yumeko.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-//Others
-router.get('/others/stalkgithub', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-  const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    stalk.Github(query).then(data => {
-		let result = data.result
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-  limitMin(apikey);
-})
-router.get('/others/githubrepo', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-  const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    stalk.GithubRepo(query).then(data => {
-		let result = data.result
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-  limitMin(apikey);
+} else {
+  res.json(loghandler.apikey)
+}
 })
 
-router.get('/others/heroml', async (req, res, next) => {
-  const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-const apikey = req.query.apikey
-	if (!apikey) return res.json(msg.paramkey)
-	if (!keypremium.includes(apikey)) return res.render('not-apikey-premium', { layout: 'not-apikey-premium' })
-    
-  xorizn = await fetchJson(`https://xorizn-apis-v1.vercel.app/api/game/detail-hero?search=${query}`).then(data => {
-		let aneh = data.result
-		if (!aneh) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: aneh
-		})
-	})
-})
-router.get('/others/chatgpt', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-  const apikey = req.query.apikey
-	if (!apikey) return res.json(msg.paramkey)
-	if (!keypremium.includes(apikey)) return res.render('not-apikey-premium', { layout: 'not-apikey-premium' })
-    
-    scrape.others.chatgpt(query)
-	.then(data => {
-    let anu = data.text
-		let result = anu
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-})
-router.get('/others/chargi', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-  const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    scrape.others.chargi(query).then(data => {
-		let result = data
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-  limitMin(apikey);
-})
-router.get('/others/toanime', async(req, res, next) => {
-	const apikey = req.query.apikey
-	if (!apikey) return res.json(msg.paramkey)
-	if (!keypremium.includes(apikey)) return res.render('not-apikey-premium', { layout: 'not-apikey-premium' })
-	const url = req.query.url
-	if(!url) return res.json(msg.paramurl)
-
-	let result = `https://api-xcoders.site/api/maker/toonify?url=${url}&id=2&apikey=Frieren`
-	data = await fetch(result).then(v => v.buffer())
-	await fs.writeFileSync(__path + '/tmp/animeh.png', data)
-	res.sendFile(__path + '/tmp/animeh.png')
-})
-router.get('/others/stabledif', async(req, res, next) => {
-	const prompt = req.query.prompt
-  if (!prompt) return res.json('Masukan Promptnya')
-  const seed = req.query.seed
-  if (!seed) return res.json('Masukan Seed')
-  const apikey = req.query.apikey
-	if (!apikey) return res.json(msg.paramkey)
-	if (!keypremium.includes(apikey)) return res.render('not-apikey-premium', { layout: 'not-apikey-premium' })
-
-	const Obj = await diffusion.stable(prompt, seed)
-	const buffer = Buffer.from(Obj.base64Img, "base64")
-	res.set({'Content-Type': 'image/png'})
-	res.send(buffer)
-})
-// Downloader
-router.get('/downloader/spotify', async (req, res, next) => {
-	const url = req.query.url
-	if (!url) return res.json(msg.paramurl)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    if (!keypremium.includes(apikey)) return res.render('not-apikey-premium', { layout: 'not-apikey-premium' })
-    
-    scrape.downloader.download.spotifyDown(url)
-	.then(data => {
-		let result = data;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-})
-router.get('/downloader/xnxx', async (req, res, next) => {
-	const url = req.query.url
-	if (!url) return res.json(msg.paramurl)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    if (!keypremium.includes(apikey)) return res.render('not-apikey-premium', { layout: 'not-apikey-premium' })
-    
-    scrape.downloader.download.xnxxDownloader(url)
-	.then(data => {
-		let result = data;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-})
-
-router.get('/downloader/tiktok', async (req, res, next) => {
-	let url = req.query.url
-	if (!url) return res.json(msg.paramurl)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    scrape.downloader.tiktok(url)
-	.then(data => {
-		let result = data;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-
-router.get('/downloader/facebook', async (req, res, next) => {
-	let url = req.query.url
-	if (!url) return res.json(msg.paramurl)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    scrape.downloader.facebook(url)
-	.then(data => {
-		let result = data;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-
-router.get('/downloader/spotify', async (req, res, next) => {
-	let url = req.query.url
-	if (!url) return res.json(msg.paramurl)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    alya = await fetchJson(`https://api.alyachan.my.id/api/spotifydl?url=${url}`)
-	.then(data => {
-		let result = data.result
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-
-router.get('/downloader/twitter', async (req, res, next) => {
-	let url = req.query.url
-	if (!url) return res.json(msg.paramurl)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    downloads.Twitter(url)
-	.then(data => {
-		let result = data.result;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-
-router.get('/downloader/mediafire', async (req, res, next) => {
-	let url = req.query.url
-	if (!url) return res.json(msg.paramurl)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    scrape.downloader.mediafire(url)
-	.then(data => {
-		let result = data;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-
-router.get('/downloader/sfilemobi', async (req, res, next) => {
-	let url = req.query.url
-	if (!url) return res.json(msg.paramurl)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    scrape.downloader.sfilemobi(url)
-	.then(data => {
-		let result = data;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-
-router.get('/downloader/soundcloud', async (req, res, next) => {
-	let url = req.query.url
-	if (!url) return res.json(msg.paramurl)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    scrape.downloader.soundcloud(url)
-	.then(data => {
-		let result = data;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-
-// Asupan
-router.get('/asupan/video/random', async (req, res, next) => {
-    const apikey = req.query.apikey
-	if (!apikey) return res.json(msg.paramkey)
-	if (!keypremium.includes(apikey)) return res.render('not-apikey-premium', { layout: 'not-apikey-premium' })
-	
-	const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/asupan/video/random.json'));
-    const rv = data[Math.floor(Math.random() * data.length)];
-    result = await fetch(rv).then(v => v.buffer())
-    await fs.writeFileSync(__path +'/tmp/asupan.mp4', result)
-    res.sendFile(__path +'/tmp/asupan.mp4')
-})
-
-router.get('/asupan/image/random', async (req, res, next) => {
-    const apikey = req.query.apikey
-	if (!apikey) return res.json(msg.paramkey)
-	if (!keypremium.includes(apikey)) return res.render('not-apikey-premium', { layout: 'not-apikey-premium' })
-	let data = JSON.parse(fs.readFileSync(__path +'/scrape/data/asupan/image/random.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-})
-
-router.get('/asupan/image/china', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/asupan/image/china.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-
-router.get('/asupan/image/indonesia', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/asupan/image/indonesia.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-
-router.get('/asupan/image/japan', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/asupan/image/japan.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-
-router.get('/asupan/image/korean', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/asupan/image/korean.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-
-router.get('/asupan/image/malaysia', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/asupan/image/malaysia.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-
-router.get('/asupan/image/thailand', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/asupan/image/thailand.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-
-router.get('/asupan/image/vietnam', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    const data = JSON.parse(fs.readFileSync(__path +'/scrape/data/asupan/image/vietnam.json'));
-    var result = data[Math.floor(Math.random() * data.length)];
-    var requestSettings = {
-        url: result,
-        method: 'GET',
-        encoding: null
-    };
-    request(requestSettings, function (error, response, body) {
-        res.set('Content-Type', 'image/png');
-        res.send(body);
-    });
-    limitMin(apikey);
-})
-
-// Search
-router.get('/search/xnxx', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    if (!keypremium.includes(apikey)) return res.render('not-apikey-premium', { layout: 'not-apikey-premium' })
-    
-    scrape.downloader.download.xnxxSearch(query)
-	.then(data => {
-		let result = data;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-})
-router.get('/search/soundcloud', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    search.SoundCloude(query)
-	.then(data => {
-		let result = data.result
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-router.get('/search/wattpad', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    search.WattPad(query)
-	.then(data => {
-		let result = data.result
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-router.get('/search/jadwaltv', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    search.JadwalTV(query)
-	.then(data => {
-		let result = data.result
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-
-router.get('/search/joox', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    scrape.search.joox(query)
-	.then(data => {
-		let result = data;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-
-router.get('/search/sfilemobi', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    scrape.search.sfilemobi(query)
-	.then(data => {
-		let result = data;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-
-router.get('/search/moddroid', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    scrape.search.moddroid(query)
-	.then(data => {
-		let result = data;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-
-router.get('/search/apkmody', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    scrape.search.apkmody(query)
-	.then(data => {
-		let result = data;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-
-router.get('/search/happymod', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    scrape.search.happymod(query)
-	.then(data => {
-		let result = data;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-
-router.get('/search/group-whatsapp', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    scrape.search.groupwa(query)
-	.then(data => {
-		let result = data;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-
-router.get('/search/sticker', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    scrape.search.sticker(query)
-	.then(data => {
-		let result = data;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-
-router.get('/search/wallpaper', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    scrape.search.wallpaper(query)
-	.then(data => {
-		let result = data;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-
-router.get('/search/ringtone', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    scrape.search.ringtone(query)
-	.then(data => {
-		let result = data;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-
-router.get('/search/pinterest', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    scrape.search.pinterest(query)
-	.then(data => {
-		let result = data;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-
-router.get('/search/wikimedia', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    scrape.search.wikimedia(query)
-	.then(data => {
-		let result = data;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-router.get('/search/playstore', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    search.PlayStore(query).then(data => {
-		let result = data.result
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-router.get('/search/bukalapak', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    search.BukaLapak(query).then(data => {
-		let result = data.result
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-router.get('/search/jadwalbola', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    search.JadwalSepakbola().then(data => {
-		let result = data.result
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-router.get('/search/kodepos', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    search.KodePos(query).then(data => {
-		let result = data.result
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-router.get('/search/lirik', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    search.Lirik(query).then(data => {
-		let result = data.result
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-router.get('/search/steam', async (req, res, next) => {
-	const query = req.query.q
-	if (!query) return res.json(msg.paramquery)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    search.Steam(query).then(data => {
-		let result = data.result
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-router.get('/search/steam-detail', async (req, res, next) => {
-	const url = req.query.url
-	if (!url) return res.json(msg.paramurl)
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    search.SteamDetail(url).then(data => {
-		let result = data.result
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-// News
-router.get('/news/gempa', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    news.Gempa().then(data => {
-		let result = data;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-router.get('/news/gempa2', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    news.Gempa2().then(data => {
-		let result = data;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-router.get('/news/kompas-global', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    news.KompasGlobal().then(data => {
-		let result = data;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-router.get('/news/kompas-news', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    news.KompasNews().then(data => {
-		let result = data;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-router.get('/news/kompas-populer', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    news.KompasTerpopuler().then(data => {
-		let result = data;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-router.get('/news/rumah-keadilan', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    news.RumahKeadilan().then(data => {
-		let result = data;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-router.get('/news/tixid', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    
-    news.TixID().then(data => {
-		let result = data;
-		if (!result) res.json(msg.nodata)
-		res.json({
-			creator: creator,
-			code: 200,
-			status: "Success",
-			data: result
-		})
-	})
-    limitMin(apikey);
-})
-// Text Pro
-router.get('/textpro/hologram-color', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/hologram-color-3d-text-effect-generator-online-1117.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/luxury-crystal', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/create-luxury-3d-crystal-text-effects-online-1116.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/metallic', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/create-3d-metallic-text-with-details-online-1108.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/grunge-metallic', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/grunge-metallic-3d-text-effect-online-1115.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/liquid-metal', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/create-3d-liquid-metal-text-effect-1112.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/multicolor-paint', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/create-3d-multicolor-paint-text-effect-online-1114.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/pink-gold', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/create-pink-soft-gold-text-effect-online-1113.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/burger', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/create-burger-3d-text-effect-1111.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/cage', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/create-cage-text-effect-online-1110.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/comic', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/create-3d-comic-text-effects-online-1091.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/neon-light', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/neon-light-text-effect-online-882.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/neon-light-2', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/create-3d-neon-light-text-effect-online-1028.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/gradient-neon-light', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/create-gradient-neon-light-text-effect-online-1085.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/orange-juice', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/create-a-3d-orange-juice-text-effect-online-1084.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/valentine', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/create-realistic-golden-text-effect-on-red-sparkles-online-1082.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/pencil', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/create-a-sketch-text-effect-online-1044.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/berry', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/create-berry-text-effect-online-free-1033.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/blackpink', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/create-blackpink-logo-style-online-1001.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/bear-logo', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/online-black-and-white-bear-mascot-logo-creation-1012.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/christmas', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/3d-christmas-text-effect-by-name-1055.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/thunder', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/online-thunder-text-effect-generator-1031.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/box-text', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/3d-box-text-effect-online-880.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/green-horor', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/create-green-horror-style-text-effect-online-1036.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/magma-hot', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/create-a-magma-hot-text-effect-online-1030.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/chocolate-cake', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/chocolate-cake-text-effect-890.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/strawberry', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/strawberry-text-effect-online-889.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/glitch', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.textpro('https://textpro.me/create-impressive-glitch-text-effects-online-1027.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/glitch-2', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    const text2 = req.query.text2
-    if (!text2) return res.json(msg.paramtext2)
-    
-    scrape.textpro('https://textpro.me/create-a-glitch-text-effect-online-free-1026.html', [text,text2])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/glitch-tiktok', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    const text2 = req.query.text2
-    if (!text2) return res.json(msg.paramtext2)
-    
-    scrape.textpro('https://textpro.me/create-glitch-text-effect-style-tik-tok-983.html', [text,text2])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/video-game-classic', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    const text2 = req.query.text2
-    if (!text2) return res.json(msg.paramtext2)
-    
-    scrape.textpro('https://textpro.me/video-game-classic-8-bit-text-effect-1037.html', [text,text2])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/marvel-studios', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    const text2 = req.query.text2
-    if (!text2) return res.json(msg.paramtext2)
-    
-    scrape.textpro('https://textpro.me/create-logo-style-marvel-studios-online-971.html', [text,text2])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-router.get('/textpro/ninja-logo', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    const text2 = req.query.text2
-    if (!text2) return res.json(msg.paramtext2)
-    
-    scrape.textpro('https://textpro.me/create-ninja-logo-online-935.html', [text,text2])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
-})
-
-// Photo Oxy
+//photooxy
 router.get('/photooxy/flaming', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.photooxy('https://photooxy.com/logo-and-text-effects/realistic-flaming-text-effect-online-197.html', [text])
-    .then((data) =>{ 
+          var apikey = req.query.apikey
+       	var text = req.query.text
+       	if(!apikey) return res.json(loghandler.noapikey)
+       if (!text) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter text"})      
+         if(listkey.includes(apikey)){
+       oxy("https://photooxy.com/logo-and-text-effects/realistic-flaming-text-effect-online-197.html", [text])
+.then((data) =>{ 
 	res.set({'Content-Type': 'image/png'})
 	res.send(data)
 	})
-    limitMin(apikey);
+.catch((err) =>{
+ res.json(loghandler.error)
 })
-
-router.get('/photooxy/night-sky', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.photooxy('https://photooxy.com/logo-and-text-effects/write-stars-text-on-the-night-sky-200.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
+} else {
+  res.json(loghandler.apikey)
+}
 })
-
 router.get('/photooxy/shadow-sky', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.photooxy('https://photooxy.com/logo-and-text-effects/shadow-text-effect-in-the-sky-394.html', [text])
-    .then((data) =>{ 
+          var apikey = req.query.apikey
+       	var text = req.query.text
+       	if(!apikey) return res.json(loghandler.noapikey)
+       if (!text) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter text"})      
+         if(listkey.includes(apikey)){
+       oxy("https://photooxy.com/logo-and-text-effects/shadow-text-effect-in-the-sky-394.html", [text])
+.then((data) =>{ 
 	res.set({'Content-Type': 'image/png'})
 	res.send(data)
 	})
-    limitMin(apikey);
+.catch((err) =>{
+ res.json(loghandler.error)
 })
-
-router.get('/photooxy/burn-paper', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.photooxy('https://photooxy.com/logo-and-text-effects/write-text-on-burn-paper-388.html', [text])
-    .then((data) =>{ 
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/photooxy/metallic', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.text
+       	if(!apikey) return res.json(loghandler.noapikey)
+       if (!text) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter text"})      
+         if(listkey.includes(apikey)){
+       oxy("https://photooxy.com/other-design/create-metallic-text-glow-online-188.html", [text])
+.then((data) =>{ 
 	res.set({'Content-Type': 'image/png'})
 	res.send(data)
 	})
-    limitMin(apikey);
+.catch((err) =>{
+ res.json(loghandler.error)
 })
-
-router.get('/photooxy/under-grass', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.photooxy('https://photooxy.com/logo-and-text-effects/make-quotes-under-grass-376.html', [text])
-    .then((data) =>{ 
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/photooxy/naruto', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.text
+       	if(!apikey) return res.json(loghandler.noapikey)
+       if (!text) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter text"})      
+         if(listkey.includes(apikey)){
+       oxy("https://photooxy.com/manga-and-anime/make-naruto-banner-online-free-378.html", [text])
+.then((data) =>{ 
 	res.set({'Content-Type': 'image/png'})
 	res.send(data)
 	})
-    limitMin(apikey);
+.catch((err) =>{
+ res.json(loghandler.error)
 })
-
-router.get('/photooxy/under-watter', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.photooxy('https://photooxy.com/logo-and-text-effects/creating-an-underwater-ocean-363.html', [text])
-    .then((data) =>{ 
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/photooxy/pubg-mobile', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.text
+       var text2 = req.query.text
+       	if(!apikey) return res.json(loghandler.noapikey)
+       if (!text || !text2) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter text & text2"})      
+         if(listkey.includes(apikey)){
+       oxy("https://photooxy.com/battlegrounds/make-wallpaper-battlegrounds-logo-text-146.html", [text,text2])
+.then((data) =>{ 
 	res.set({'Content-Type': 'image/png'})
 	res.send(data)
 	})
-    limitMin(apikey);
+.catch((err) =>{
+ res.json(loghandler.error)
+})
+} else {
+  res.json(loghandler.apikey)
+}
 })
 
-router.get('/photooxy/under-white', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.photooxy('https://photooxy.com/logo-and-text-effects/3d-text-effect-under-white-cube-217.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
+// search api
+router.get('/search/google-image', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.query
+       	if(!apikey) return res.json(loghandler.noapikey)
+       if (!text) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter query"})      
+         if(listkey.includes(apikey)){
+       scr.googleImage(text).then(data => {
+        var data = data;
+             res.json({
+             	status: 200,
+             	data,
+             })
+         })
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
+})
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/search/wallpaper', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.query
+       	if(!apikey) return res.json(loghandler.noapikey)
+       if (!text) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter query"})      
+         if(listkey.includes(apikey)){
+       scr.wallpaper(text)
+	.then(data => {
+		var result = data;
+		res.json({
+			result
+		})
+		})
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
+})
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/search/pinterest', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.query
+       	if(!apikey) return res.json(loghandler.noapikey)
+       if (!text) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter query"})      
+         if(listkey.includes(apikey)){
+       scr.pinterest(text)
+	.then(data => {
+		var result = data;
+		res.json({
+			result
+		})
+		})
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
+})
+} else {
+  res.json(loghandler.apikey)
+}
 })
 
-router.get('/photooxy/coffe-cup', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.photooxy('https://photooxy.com/logo-and-text-effects/put-any-text-in-to-coffee-cup-371.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
+//nsfw
+router.get('/nsfw/ass', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.page
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://raw.githubusercontent.com/danzzcoding/data-danzzapi.xyz/main/nsfw/ass.json`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+        var result = data[Math.floor(Math.random() * data.length)];
+var requestSettings = {
+      url: result.url,
+      method: 'GET',
+      encoding: null
+   };
+   request(requestSettings, function(error, response, body) {
+      res.set('Content-Type', 'image/png');
+      res.send(body);
+   });
+   })
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/nsfw/ahegao', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.page
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://raw.githubusercontent.com/danzzcoding/data-danzzapi.xyz/main/nsfw/ahegao.json`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+        var result = data[Math.floor(Math.random() * data.length)];
+             var requestSettings = {
+      url: result.url,
+      method: 'GET',
+      encoding: null
+   };
+   request(requestSettings, function(error, response, body) {
+      res.set('Content-Type', 'image/png');
+      res.send(body);
+   });})
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/nsfw/bdsm', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.page
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://raw.githubusercontent.com/danzzcoding/data-danzzapi.xyz/main/nsfw/bdsm.json`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+        var result = data[Math.floor(Math.random() * data.length)];
+             var requestSettings = {
+      url: result.url,
+      method: 'GET',
+      encoding: null
+   };
+   request(requestSettings, function(error, response, body) {
+      res.set('Content-Type', 'image/png');
+      res.send(body);
+   });})
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/nsfw/blowjob', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.page
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://raw.githubusercontent.com/danzzcoding/data-danzzapi.xyz/main/nsfw/blowjob.json`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+        var result = data[Math.floor(Math.random() * data.length)];
+             var requestSettings = {
+      url: result.url,
+      method: 'GET',
+      encoding: null
+   };
+   request(requestSettings, function(error, response, body) {
+      res.set('Content-Type', 'image/png');
+      res.send(body);
+   });})
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/nsfw/cuckold', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.page
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://raw.githubusercontent.com/danzzcoding/data-danzzapi.xyz/main/nsfw/cuckold.json`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+        var result = data[Math.floor(Math.random() * data.length)];
+             var requestSettings = {
+      url: result.url,
+      method: 'GET',
+      encoding: null
+   };
+   request(requestSettings, function(error, response, body) {
+      res.set('Content-Type', 'image/png');
+      res.send(body);
+   });})
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/nsfw/cum', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.page
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://raw.githubusercontent.com/ArifzynXD/data-arifzyn-api.my.id/master/nsfw/cum.json`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+        var result = data[Math.floor(Math.random() * data.length)];
+             var requestSettings = {
+      url: result.url,
+      method: 'GET',
+      encoding: null
+   };
+   request(requestSettings, function(error, response, body) {
+      res.set('Content-Type', 'image/png');
+      res.send(body);
+   });})
+} else {
+  res.json(loghandler.apikey)
+}
 })
 
-router.get('/photooxy/neon-glow', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.photooxy('https://photooxy.com/logo-and-text-effects/make-smoky-neon-glow-effect-343.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
+
+// islamic
+router.get('/islam/tahlil', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.page
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://raw.githubusercontent.com/zeeone-ofc/My-SQL-Results/master/data/dataTahlil.json`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+             res.json({
+                 result
+             })
+         })
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
+})
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/islam/wirid', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.page
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://raw.githubusercontent.com/zeeone-ofc/My-SQL-Results/master/data/dataWirid.json`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+             res.json({
+                 result
+             })
+         })
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
+})
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/islam/ayatkursi', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.page
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://raw.githubusercontent.com/zeeone-ofc/My-SQL-Results/master/data/dataAyatKursi.json`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+             res.json({
+                 result
+             })
+         })
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
+})
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/islam/doaharian', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.page
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://raw.githubusercontent.com/zeeone-ofc/My-SQL-Results/master/data/dataDoaHarian.json`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+             res.json({
+                 result
+             })
+         })
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
+})
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/islam/bacaanshalat', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.page
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://raw.githubusercontent.com/zeeone-ofc/My-SQL-Results/master/data/dataBacaanShalat.json`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+             res.json({
+                 result
+             })
+         })
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
+})
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/islam/niatshalat', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.page
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://raw.githubusercontent.com/zeeone-ofc/My-SQL-Results/master/data/dataNiatShalat.json`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+             res.json({
+                 result
+             })
+         })
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
+})
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/islam/kisahnabi', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.page
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://raw.githubusercontent.com/zeeone-ofc/My-SQL-Results/master/data/dataKisahNabi.json`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+             res.json({
+                 result
+             })
+         })
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
+})
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/islam/asmaulhusna', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.page
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://raw.githubusercontent.com/zeeone-ofc/My-SQL-Results/master/data/dataAsmaulHusna.json`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+             res.json({
+                 result
+             })
+         })
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
+})
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/islam/niatsubuh', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.page
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://raw.githubusercontent.com/zeeone-ofc/My-SQL-Results/master/data/NiatShubuh.json`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+             res.json({
+                 result
+             })
+         })
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
+})
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/islam/niatzuhur', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.page
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://raw.githubusercontent.com/zeeone-ofc/My-SQL-Results/master/data/NiatDzuhur.json`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+             res.json({
+                 result
+             })
+         })
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
+})
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/islam/niatmagrib', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.page
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://raw.githubusercontent.com/zeeone-ofc/My-SQL-Results/master/data/NiatMaghrib.json`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+             res.json({
+                 result
+             })
+         })
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
+})
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/islam/niatisya', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.page
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://raw.githubusercontent.com/Zhirrr/My-SQL-Results/main/data/NiatIsya.json`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+             res.json({
+                 result
+             })
+         })
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
+})
+} else {
+  res.json(loghandler.apikey)
+}
+})
+router.get('/islam/niatashar', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.page
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://raw.githubusercontent.com/zeeone-ofc/My-SQL-Results/master/data/NiatAshar.json`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+             res.json({
+                 result
+             })
+         })
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
+})
+} else {
+  res.json(loghandler.apikey)
+}
 })
 
-router.get('/photooxy/rainbow-shine', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.photooxy('https://photooxy.com/logo-and-text-effects/rainbow-shine-text-223.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
+//game
+router.get('/game/tebakgambar', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.page
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+       scr.tebakgambar()
+	.then(data => {
+		var result = data;
+		res.json({
+			result
+		})
+		})
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
+})
+} else {
+  res.json(loghandler.apikey)
+}
 })
 
-router.get('/photooxy/army-camouflage', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.photooxy('https://photooxy.com/logo-and-text-effects/army-camouflage-fabric-text-effect-221.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
+// other
+router.get('/other/github-stalk', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.username
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(!text) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter username"})
+        if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://github-api-zhirrr.vercel.app/api/detailuser?q=${text}`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+             res.json({
+             	author: 'Zeeone',
+                 result
+             })
+         })
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
 })
-
-router.get('/photooxy/glow-text', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.photooxy('https://photooxy.com/logo-and-text-effects/create-a-3d-glowing-text-effect-220.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
+} else {
+  res.json(loghandler.apikey)
+}
 })
-
-router.get('/photooxy/candy-text', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.photooxy('https://photooxy.com/logo-and-text-effects/honey-text-effect-218.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
+router.get('/other/hilih', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.kata
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(!text) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter kata"})
+        if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://hilih-api-zhirrr.vercel.app/api/hilih?kata=${text}`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+             res.json({
+                 result
+             })
+         })
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
 })
-
-router.get('/photooxy/vintage', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.photooxy('https://photooxy.com/other-design/vintage-text-style-219.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
+} else {
+  res.json(loghandler.apikey)
+}
 })
-
-router.get('/photooxy/gradient-avatar', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.photooxy('https://photooxy.com/logo-and-text-effects/gradient-avatar-text-effect-207.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
+router.get('/other/kodepos', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.kota
+       	if(!apikey) return res.json(loghandler.noapikey)
+       if(!text) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter kota"})
+        if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://kodepos-api-zhirrr.vercel.app/?q=${text}`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+             res.json({
+                 result
+             })
+         })
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
 })
-
-router.get('/photooxy/fur-text', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.photooxy('https://photooxy.com/logo-and-text-effects/fur-text-effect-generator-198.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
+} else {
+  res.json(loghandler.apikey)
+}
 })
-
-router.get('/photooxy/striking', async (req, res, next) => {
-    const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-    const text = req.query.text
-    if (!text) return res.json(msg.paramtext)
-    
-    scrape.photooxy('https://photooxy.com/other-design/striking-3d-text-effect-online-187.html', [text])
-    .then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-    limitMin(apikey);
+router.get('/other/covid-world', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.kata
+       	if(!apikey) return res.json(loghandler.noapikey)
+        if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://covid19-api-zhirrr.vercel.app/api/world`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+             res.json({
+                 result
+             })
+         })
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
 })
-
-// Canvas
-router.get('/canvas/welcome', async (req, res, next) => {
-	const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-	const name = req.query.name
-	if (!name) return res.json({ status : false, author : `${author}`, message : "Enter Name"})
-	const gpname = req.query.gpname
-	if (!gpname) return res.json({ status : false, author : `${author}`, message : "Enter Group Name"})
-	const member = req.query.member
-	if (!member) return res.json({ status : false, author : `${author}`, message : "Enter Members Amount"})
-	const pp = req.query.pp
-	if (!pp) return res.json({ status : false, author : `${author}`, message : "Enter Pp Url"})
-	const bg = req.query.bg
-	if (!bg) return res.json({ status : false, author : `${author}`, message : "Enter Background Url"})
-	
-	const baseURL = JSON.parse(fs.readFileSync(__path + '/scrape/data/canvas/welcome/1.json'))
-	let result = {
-		url: `${baseURL}?name=${name}&gpname=${gpname}&member=${member}&pp=${pp}&bg=${bg}`,
-		method: 'GET',
-		encoding: null
-	};
-	
-	request(result, function(error, response, body) {
-		res.set('Content-Type', 'image/png')
-		res.send(body)
-	})
-	limitMin(apikey)
+} else {
+  res.json(loghandler.apikey)
+}
 })
-router.get('/canvas/goodbye', async (req, res, next) => {
-	const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-const name = req.query.name
-	if (!name) return res.json({ status : false, author : `${author}`, message : "Enter Name"})
-	const gpname = req.query.gpname
-	if (!gpname) return res.json({ status : false, author : `${author}`, message : "Enter Group Name"})
-	const member = req.query.member
-	if (!member) return res.json({ status : false, author : `${author}`, message : "Enter Members Amount"})
-	const pp = req.query.pp
-	if (!pp) return res.json({ status : false, author : `${author}`, message : "Enter Pp Url"})
-	const bg = req.query.bg
-	if (!bg) return res.json({ status : false, author : `${author}`, message : "Enter Background Url"})
-	
-	const baseURL = JSON.parse(fs.readFileSync(__path + '/scrape/data/canvas/goodbye/1.json'))
-	let result = {
-		url: `${baseURL}?name=${name}&gpname=${gpname}&member=${member}&pp=${pp}&bg=${bg}`,
-		method: 'GET',
-		encoding: null
-	};
-	
-	request(result, function(error, response, body) {
-		res.set('Content-Type', 'image/png')
-		res.send(body)
-	})
-	limitMin(apikey)
+router.get('/other/kbbi', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	var text = req.query.kata
+       	if(!apikey) return res.json(loghandler.noapikey)
+       if(!text) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter kata"})
+        if(listkey.includes(apikey)){
+       fetch(encodeURI(`https://kbbi-api-zhirrr.vercel.app/api/kbbi?text=${text}`))
+        .then(response => response.json())
+        .then(data => {
+        var result = data;
+             res.json({
+                 result
+             })
+         })
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
 })
-router.get('/maker/ttp', async(req, res, next) => {
-	const apikey = req.query.apikey
-    if (!apikey) return res.json(msg.paramkey)
-    const check = await checkKey(apikey)
-    if (!check) return res.render('not-apikey', { layout: 'not-apikey' })
-    const limit = await isLimit(apikey)
-    if (limit) return res.render('limit', { layout: 'limit' })
-	const text = req.query.text
-	if(!text) return res.json(msg.paramtext)
-
-	const baseURL = JSON.parse(fs.readFileSync(__path + '/scrape/data/maker/ttp/2.json'))
-	let result = `${baseURL}?text=${text}`
-	data = await fetch(result).then(v => v.buffer())
-	await fs.writeFileSync(__path + '/tmp/ttp.png', data)
-	res.sendFile(__path + '/tmp/ttp.png')
-	limitMin(apikey)
+} else {
+  res.json(loghandler.apikey)
+}
 })
 
 module.exports = router
