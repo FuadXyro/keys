@@ -1,58 +1,40 @@
 {
-  "name": "api-mirip-zeks",
-  "version": "2.0.0",
-  "description": "Rest api update by Zeeoneofc",
+  "name": "zeltoria-api",
+  "version": "4.0.0",
+  "description": "My Rest Api Project",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/zeeone-ofc/api-mirip-zeks.git"
-  },
   "keywords": [
-    "botwa",
     "simple",
     "api",
     "rest",
-    "api",
-    "website",
-    "api-mirip-zeks"
+    "api"
   ],
-  "author": "Zeeoneofc",
+  "author": "Zeltoria",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/zeeone-ofc/api-mirip-zeks/issues"
-  },
   "dependencies": {
-    "@bochilteam/scraper": "^3.0.0",
+    "@xct007/frieren-scraper": "^0.0.2",
     "axios": "^0.21.1",
     "base-64": "^1.0.0",
     "base32": "0.0.6",
-    "brainly-scraper-v2": "^1.1.2",
-    "cfonts": "^2.9.1",
+    "caliph-api": "^1.0.0",
     "chalk": "^4.1.0",
     "cheerio": "^1.0.0-rc.5",
-    "cookie": "^0.5.0",
     "cors": "^2.8.5",
-    "crypto": "^1.0.1",
     "express": "^4.17.1",
-    "file-type": "^16.1.0",
-    "fluent-ffmpeg": "^2.1.2",
-    "form-data": "^3.0.0",
-    "jquery": "^3.6.3",
-    "lodash": "^4.17.20",
-    "needle": "^2.6.0",
+    "form-data": "^4.0.0",
+    "jquery": "^3.7.0",
+    "lolkil-scraper": "^1.0.6",
+    "moment": "^2.29.1",
+    "mongoose": "^6.9.2",
+    "nekopoi-scraper": "^2.7.1",
     "node-fetch": "^2.6.1",
-    "node-gtts": "^2.0.2",
-    "node-tesseract-ocr": "^2.0.0",
     "popper.js": "^1.16.1",
-    "qs": "^6.10.1",
     "request": "^2.88.2",
-    "spinnies": "^0.5.1",
-    "ssl-express-www": "^3.0.7",
-    "urlencode": "^1.1.0"
+    "scraper-jsc": "^0.0.3",
+    "ssl-express-www": "^3.0.7"
   },
-  "homepage": "https://github.com/zeeone-ofc/api-mirip-zeks#readme"
 }

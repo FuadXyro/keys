@@ -1,1202 +1,836 @@
-// Gada reupload" 😏
-// Klo mau colong fitur, jgn asal colong bodoh ntr api eror
+__path = process.cwd()
 
-// Thanks to ( jgn di hapus jamet)
-/*
-<p> Eka Danuarta</p>
-<p> Ojan</p>
-<p> Farhan</p>
-<p> ZeeoneOfc </p>
-*/
-__path = process.cwd();
-
-require ('../settings.js')
+// module
 var express = require('express');
-var axios = require('axios');
-var qs = require('qs');
 var fetch = require('node-fetch');
 var cheerio = require('cheerio');
 var request = require('request');
-var fs = require('fs');
+var api = require("caliph-api");
+var lolkilScraper = require('lolkil-scraper')
 var router  = express.Router();
-var creator = global.creator
-const listkey = global.apikey
+var fs = require('fs');
+var { search } = require('scraper-jsc')
+var { news } = require('scraper-jsc')
+var { stalk } = require('scraper-jsc')
+var { unsplash } = require('@xct007/frieren-scraper')
+var { danbooru } = require('@xct007/frieren-scraper')
+var { music } = require('@xct007/frieren-scraper')
+var { komikuId } = require('@xct007/frieren-scraper')
+var { otakudesu } = require('@xct007/frieren-scraper')
+var { anoboy } = require('@xct007/frieren-scraper')
+var { doujindesu } = require('@xct007/frieren-scraper')
+var { 
+ChatGpt, 
+animedif, 
+attp } = require('../lib/scrape');
+// Lib
+var { fetchJson, getBuffer } = require('../lib/myfunc');
+// Settings
+const author = "Zeltoria"
 
-const scr = require ('@bochilteam/scraper')
-const { color, bgcolor } = require(__path + '/lib/color.js');
-const { fetchJson } = require(__path + '/lib/fetcher.js')
-const options = require(__path + '/lib/options.js');
-const { getBuffer } = require(__path + '/lib/functions.js');
-const oxy = require(__path + '/lib/oxy.js');
-
-var {
-	Vokal,
-	Base,
-	Searchnabi,
-    Gempa
-} = require('./../lib');
-
-_ = require('lodash')
-
-loghandler = {
-	noapikey:{
-		status: 403,
-        message: 'Masukkan parameter apikey',
-        maintanied_by: `${creator}`
-    },
+// Mess err
+mess = {
     error: {
-        status: 503,
-        message: 'Service Unavaible, Sedang dalam perbaikan',
-        maintanied_by: `${creator}`
-    },
-    apikey: {
-    	status: 403,
-    	message: 'Forbiden, Invalid apikey, hubungi saya di whatsapp untuk mendapatkan apikey anda',
-    	maintanied_by: `${creator}`
+        status: false,
+        message: 'Error, Service Unavaible',
+        maintanied_by: 'Zeltoria'
     },
     noturl: {
-    	status: 403,
-    	message: 'Forbiden, Invlid url, masukkan parameter url',
-    	maintanied_by: `${creator}`,
+    	status: false,
+    	message: 'Error, Invalid Url',
+    	maintanied_by: 'Zeltoria'
+    },
+    notquery: {
+    	status: false,
+    	code: 403,
+    	message: 'Error, Invalid Query',
+    	maintanied_by: 'Zeltoria'
     }
 }
+// Features
+// ANIMEHHHHHHHHHHHHHHHHHHHH
+router.get('/animanga/komikuid', async (req, res, next) => {
+	var query = req.query.q
+	if (!query) return res.json(mess.notquery)
+	let data = await komikuId.search(query)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data
+	})
+})
+router.get('/animanga/komikuid-detail', async (req, res, next) => {
+	var url = req.query.url
+	if (!url) return res.json(mess.noturl)
+	let data = await komikuId.search(url)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data
+	})
+})
+router.get('/animanga/komikuid-latest', async (req, res, next) => {
+	let data = await komikuId.latest();
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data
+	})
+})
+router.get('/animanga/otakudesu', async (req, res, next) => {
+	var query = req.query.q
+	if (!query) return res.json(mess.notquery)
+	let data = await otakudesu.search(query)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data
+	})
+})
+router.get('/animanga/otakudesu-detail', async (req, res, next) => {
+	var url = req.query.url
+	if (!url) return res.json(mess.noturl)
+	let data = await otakudesu.detail(url)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data
+	})
+})
+router.get('/animanga/otakudesu-latest', async (req, res, next) => {
+	let data = await otakudesu.latest();
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data
+	})
+})
+router.get('/animanga/doujindesu', async (req, res, next) => {
+	var query = req.query.q
+	if (!query) return res.json(mess.notquery)
+	let data = await doujindesu.search(query)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data
+	})
+})
+router.get('/animanga/doujindesu-detail', async (req, res, next) => {
+	var url = req.query.url
+	if (!url) return res.json(mess.noturl)
+	let data = await doujindesu.detail(url)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data
+	})
+})
+router.get('/animanga/doujindesu-latest', async (req, res, next) => {
+	let data = await doujindesu.latest();
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data
+	})
+})
+router.get('/animanga/anoboy', async (req, res, next) => {
+	var query = req.query.q
+	if (!query) return res.json(mess.notquery)
+	let data = await anoboy.search(query)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data
+	})
+})
+router.get('/animanga/anoboy-detail', async (req, res, next) => {
+	var url = req.query.url
+	if (!url) return res.json(mess.noturl)
+	let data = await anoboy.detail(url)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data
+	})
+})
+router.get('/animanga/anoboy-latest', async (req, res, next) => {
+	let data = await anoboy.latest();
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data
+	})
+})
+//-----------------------------------------------------------------
 
-var len = 15
-        var arr = '123456789abcdefghijklmnopqrstuvwxyz'
-        var random = '';
-
-        for (var i = len; i > 0; i--) {
-            random += arr[Math.floor(Math.random() * arr.length)];
-        }
-
-        var lenn = 5
-        var randomlagi = '';
-
-        for (var i = lenn; i > 0; i--) {
-            randomlagi += arr[Math.floor(Math.random() * arr.length)];
-        }
-
-        var randomTextNumber = random+randomlagi+'---------Apriliya-Putri-Fatmawati'+'LOLI--KILLERS';
-        
-router.get('/cekapikey', async (req, res, next) => {
-	var apikey = req.query.apikey
-	if(!apikey) return res.json(loghandler.noapikey)
-	if(listkey.includes(apikey)){
-		res.json({
-			apikey: apikey,
-status: true,
-limit: 'unlimited'
-		})
-		} else {
-			res.json(loghandler.apikey)
-			}
-})
-// cecan
-router.get('/cecan/china', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-         var data =["https://i.postimg.cc/QdncScPQ/1.jpg","https://i.postimg.cc/zv1CK5Q4/10.jpg","https://i.postimg.cc/4x3zzW84/11.jpg","https://i.postimg.cc/pXCfhwJ1/12.jpg","https://i.postimg.cc/brHQRWcr/13.jpg","https://i.postimg.cc/zX8wfzKg/14.jpg","https://i.postimg.cc/QM91zHGR/15.jpg","https://i.postimg.cc/43DVRsXn/16.jpg","https://i.postimg.cc/nrkDmmBQ/17.jpg","https://i.postimg.cc/CLhDgvpC/18.jpg","https://i.postimg.cc/fT8dTxMG/19.jpg","https://i.postimg.cc/RFwfMy0d/2.jpg","https://i.postimg.cc/nrZmM2jJ/20.jpg","https://i.postimg.cc/dVDy7L1L/21.jpg","https://i.postimg.cc/kMF8z0zX/22.jpg","https://i.postimg.cc/VkTbXmr4/23.jpg","https://i.postimg.cc/3wv0BV2h/24.jpg","https://i.postimg.cc/V6PrHgFC/25.jpg","https://i.postimg.cc/MT0MkBsr/26.jpg","https://i.postimg.cc/RhM3v0yC/27.jpg","https://i.postimg.cc/D0BS0T3r/28.jpg","https://i.postimg.cc/VsRrDj0J/29.jpg","https://i.postimg.cc/TY3ySpnC/3.jpg","https://i.postimg.cc/NfCywB4Y/30.jpg","https://i.postimg.cc/3RZRfTRs/31.jpg","https://i.postimg.cc/HnZLH9b3/4.jpg","https://i.postimg.cc/rFsmj7LH/5.jpg","https://i.postimg.cc/4N03Swfx/6.jpg","https://i.postimg.cc/66YqdtFR/7.jpg","https://i.postimg.cc/rwtpXWsC/8.jpg","https://i.postimg.cc/wB8j6vsK/9.jpg"]
-         var result = data[Math.floor(Math.random() * data.length)];
-         var requestSettings = {
-      url: result,
-      method: 'GET',
-      encoding: null
-   };
-   request(requestSettings, function(error, response, body) {
-      res.set('Content-Type', 'image/png');
-      res.send(body);
-   });
-} else {
-  res.json(loghandler.apikey)
-}
-})
-router.get('/cecan/vietnam', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-         var data =["https://i.postimg.cc/QdncScPQ/1.jpg","https://i.postimg.cc/zv1CK5Q4/10.jpg","https://i.postimg.cc/4x3zzW84/11.jpg","https://i.postimg.cc/pXCfhwJ1/12.jpg","https://i.postimg.cc/brHQRWcr/13.jpg","https://i.postimg.cc/zX8wfzKg/14.jpg","https://i.postimg.cc/QM91zHGR/15.jpg","https://i.postimg.cc/43DVRsXn/16.jpg","https://i.postimg.cc/nrkDmmBQ/17.jpg","https://i.postimg.cc/CLhDgvpC/18.jpg","https://i.postimg.cc/fT8dTxMG/19.jpg","https://i.postimg.cc/RFwfMy0d/2.jpg","https://i.postimg.cc/nrZmM2jJ/20.jpg","https://i.postimg.cc/dVDy7L1L/21.jpg","https://i.postimg.cc/kMF8z0zX/22.jpg","https://i.postimg.cc/VkTbXmr4/23.jpg","https://i.postimg.cc/3wv0BV2h/24.jpg","https://i.postimg.cc/V6PrHgFC/25.jpg","https://i.postimg.cc/MT0MkBsr/26.jpg","https://i.postimg.cc/RhM3v0yC/27.jpg","https://i.postimg.cc/D0BS0T3r/28.jpg","https://i.postimg.cc/VsRrDj0J/29.jpg","https://i.postimg.cc/TY3ySpnC/3.jpg","https://i.postimg.cc/NfCywB4Y/30.jpg","https://i.postimg.cc/3RZRfTRs/31.jpg","https://i.postimg.cc/HnZLH9b3/4.jpg","https://i.postimg.cc/rFsmj7LH/5.jpg","https://i.postimg.cc/4N03Swfx/6.jpg","https://i.postimg.cc/66YqdtFR/7.jpg","https://i.postimg.cc/rwtpXWsC/8.jpg","https://i.postimg.cc/wB8j6vsK/9.jpg"]
-         var result = data[Math.floor(Math.random() * data.length)];
-         var requestSettings = {
-      url: result,
-      method: 'GET',
-      encoding: null
-   };
-   request(requestSettings, function(error, response, body) {
-      res.set('Content-Type', 'image/png');
-      res.send(body);
-   });
-} else {
-  res.json(loghandler.apikey)
-}
-})
-router.get('/cecan/thailand', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-         var data = ["https://i.postimg.cc/PJtYFxrk/1.jpg","https://i.postimg.cc/445zHzB4/10.jpg","https://i.postimg.cc/RFTnfB1p/11.jpg","https://i.postimg.cc/RZ3fY29q/12.jpg","https://i.postimg.cc/jd3PZtpG/13.jpg","https://i.postimg.cc/65qG7F8z/14.jpg","https://i.postimg.cc/T3WL0mqD/15.jpg","https://i.postimg.cc/6q54fmYW/16.jpg","https://i.postimg.cc/rmgKs9cv/17.jpg","https://i.postimg.cc/j2Ld50M7/18.jpg","https://i.postimg.cc/YC12jxzb/19.jpg","https://i.postimg.cc/MHMqw0G0/2.jpg","https://i.postimg.cc/63Hpt5fK/20.jpg","https://i.postimg.cc/zBLGDYtR/21.jpg","https://i.postimg.cc/jdnSYTwV/3.jpg","https://i.postimg.cc/HWykfH8q/4.jpg","https://i.postimg.cc/fycZkzxk/5.jpg","https://i.postimg.cc/MK0KpDDt/6.jpg","https://i.postimg.cc/5NJbTzVz/7.jpg","https://i.postimg.cc/QtWjGkCQ/8.jpg","https://i.postimg.cc/C5TSFBnW/9.jpg"]
-         var result = data[Math.floor(Math.random() * data.length)];
-         var requestSettings = {
-      url: result,
-      method: 'GET',
-      encoding: null
-   };
-   request(requestSettings, function(error, response, body) {
-      res.set('Content-Type', 'image/png');
-      res.send(body);
-   });
-} else {
-  res.json(loghandler.apikey)
-}
-})
-router.get('/cecan/indonesia', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-         var data = ["https://i.postimg.cc/sgYy39Yy/1.jpg","https://i.postimg.cc/k5wmbJYp/10.jpg","https://i.postimg.cc/XJJ0KRT7/11.jpg","https://i.postimg.cc/PfCCT9Pj/12.jpg","https://i.postimg.cc/GpbRt8KD/13.jpg","https://i.postimg.cc/gkRr6hVt/14.jpg","https://i.postimg.cc/rsRX3SVB/15.jpg","https://i.postimg.cc/52S0sMkw/16.jpg","https://i.postimg.cc/tTY4RnR5/17.jpg","https://i.postimg.cc/4d7XRCw2/18.jpg","https://i.postimg.cc/k55nwRSm/19.jpg","https://i.postimg.cc/QCcsVp2p/2.jpg","https://i.postimg.cc/zGz5XH0g/20.jpg","https://i.postimg.cc/y8LKJ6br/21.jpg","https://i.postimg.cc/WbjcXJRH/22.jpg","https://i.postimg.cc/m2wfq2B2/23.jpg","https://i.postimg.cc/MGghRnbt/24.jpg","https://i.postimg.cc/1t6bKyvS/25.jpg","https://i.postimg.cc/fyNp21P9/26.jpg","https://i.postimg.cc/J05g9Pwd/27.jpg","https://i.postimg.cc/m2TKQfCx/28.jpg","https://i.postimg.cc/MKtN5Pmn/29.jpg","https://i.postimg.cc/PxGRJBTR/3.jpg","https://i.postimg.cc/cHQ5nXJ4/30.jpg","https://i.postimg.cc/bY9BYCMm/31.jpg","https://i.postimg.cc/QdH4bXMz/32.jpg","https://i.postimg.cc/Rhgd78x9/33.jpg","https://i.postimg.cc/sD2wjV52/34.jpg","https://i.postimg.cc/pXV1mQMR/35.jpg","https://i.postimg.cc/sfmTCBQ8/36.jpg","https://i.postimg.cc/ZRcxmgR3/37.jpg","https://i.postimg.cc/mkgNgwzn/38.jpg","https://i.postimg.cc/pXyJNsth/4.jpg","https://i.postimg.cc/13q0X4Xy/5.jpg","https://i.postimg.cc/DZBLHXjP/7.jpg","https://i.postimg.cc/RhYfVzz3/8.jpg","https://i.postimg.cc/TYZmzG9F/9.jpg"]
-         var result = data[Math.floor(Math.random() * data.length)];
-         var requestSettings = {
-      url: result,
-      method: 'GET',
-      encoding: null
-   };
-   request(requestSettings, function(error, response, body) {
-      res.set('Content-Type', 'image/png');
-      res.send(body);
-   });
-} else {
-  res.json(loghandler.apikey)
-}
-})
-router.get('/cecan/korea', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-         var data = ["https://i.postimg.cc/K87Z4CkB/p-19620motq1.jpg","https://i.postimg.cc/wvgR7hjT/p-19623vybj1.jpg","https://i.postimg.cc/QtJ5bfyT/p-19623z95r1.jpg","https://i.postimg.cc/XJbddRQW/p-19624y1on1.jpg","https://i.postimg.cc/dVG0rLX7/p-19625anrs1.jpg","https://i.postimg.cc/9fWc91ZS/p-19625lzea1.jpg","https://i.postimg.cc/SKWzSZqv/p-19626rftx1.jpg","https://i.postimg.cc/hPjxLbbX/p-196298pkr1.jpg","https://i.postimg.cc/hvGJ0cmk/p-1962alh5c1.jpg","https://i.postimg.cc/ZqcKsXJ4/p-1962asjl31.jpg","https://i.postimg.cc/pX6jqhqq/p-1962enqpe1.jpg","https://i.postimg.cc/T1SPqmfb/p-1962gl6nf1.jpg","https://i.postimg.cc/mZVC16Mx/p-1962koqm41.jpg","https://i.postimg.cc/d3zqTYjm/p-1962pvq221.jpg","https://i.postimg.cc/3xQ883R3/p-1962spcdo1.jpg","https://i.postimg.cc/BbZFw2rw/p-1962u3qhb1.jpg","https://i.postimg.cc/nVwMJ8BL/p-1962umwai1.jpg","https://i.postimg.cc/76hDs6Bn/p-1962y8lij1.jpg","https://i.postimg.cc/ydp6s9JG/p-1962yt9ph1.jpg"]
-         var result = data[Math.floor(Math.random() * data.length)];
-         var requestSettings = {
-      url: result,
-      method: 'GET',
-      encoding: null
-   };
-   request(requestSettings, function(error, response, body) {
-      res.set('Content-Type', 'image/png');
-      res.send(body);
-   });
-} else {
-  res.json(loghandler.apikey)
-}
-})
-router.get('/cecan/japan', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-         var data = ["https://i.postimg.cc/RCcjLvF6/p-196252lk91.jpg","https://i.postimg.cc/7hMdHncM/p-19625eppj1.jpg","https://i.postimg.cc/CLpwwvZD/p-19629cg431.jpg","https://i.postimg.cc/pVwLpWSm/p-19629eev81.jpg","https://i.postimg.cc/ydxwTRD7/p-1962cau3w1.jpg","https://i.postimg.cc/D0LFqGN8/p-1962ck87p1.jpg","https://i.postimg.cc/76zjcknR/p-1962fyik51.jpg","https://i.postimg.cc/bYtzcXvp/p-1962i85aq1.jpg","https://i.postimg.cc/nLWtgTbX/p-1962nvj4g1.jpg","https://i.postimg.cc/rFGMsSWH/p-1962o5sp41.jpg","https://i.postimg.cc/wTgnWnyW/p-1962p9nlk1.jpg","https://i.postimg.cc/T1XBv4k3/p-1962q7ura1.jpg","https://i.postimg.cc/nz6pj20y/p-1962qiubc1.jpg","https://i.postimg.cc/13CxVMzv/p-1962tt38s1.jpg","https://i.postimg.cc/ZYBqbBwk/p-1962ufc7p1.jpg","https://i.postimg.cc/52x1C6S2/p-1962vn5rc1.jpg","https://i.postimg.cc/GpHWFY8d/p-1962vpyp71.jpg","https://i.postimg.cc/tTc8vg6W/p-1962w2hyp1.jpg"]
-         var result = data[Math.floor(Math.random() * data.length)];
-         var requestSettings = {
-      url: result,
-      method: 'GET',
-      encoding: null
-   };
-   request(requestSettings, function(error, response, body) {
-      res.set('Content-Type', 'image/png');
-      res.send(body);
-   });
-} else {
-  res.json(loghandler.apikey)
-}
-})
-router.get('/cecan/malaysia', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-         var data = ["https://i.postimg.cc/L8BFTfV1/p-1962mt0wq1.jpg","https://i.postimg.cc/SKgF0h3Q/p-1962p3bmk1.jpg","https://i.postimg.cc/25tYbYwc/p-1962pac7k1.jpg","https://i.postimg.cc/fRXRhJfz/p-1962qpsvb1.jpg","https://i.postimg.cc/Yq7Hmb6H/p-1962rcc7k1.jpg","https://i.postimg.cc/G3QDZSh7/p-1962v04461.jpg","https://i.postimg.cc/6QttJzQc/p-1962va89q1.jpg","https://i.postimg.cc/t4HHWDFb/p-1962y8nl71.jpg","https://i.postimg.cc/02VB2fZZ/p-1962y8oif1.jpg","https://i.postimg.cc/CMqh8R9j/p-1962yyuuh1.jpg","https://i.postimg.cc/Hn7f77xj/p-19622gld51.jpg","https://i.postimg.cc/Hnpyrb39/p-196240q3o1.jpg","https://i.postimg.cc/wMGj9Nrv/p-19624pvv61.jpg","https://i.postimg.cc/hPXGpCJ7/p-19625n89w1.jpg","https://i.postimg.cc/TwQPHFqn/p-19627bm3c1.jpg","https://i.postimg.cc/zG08NKR1/p-1962c7n2o1.jpg","https://i.postimg.cc/j2XkfQTx/p-1962caiz61.jpg","https://i.postimg.cc/59TJNf06/p-1962csdwa1.jpg","https://i.postimg.cc/6pwptBjC/p-1962d0xml1.jpg","https://i.postimg.cc/PqyhtZpj/p-1962d4cuh1.jpg","https://i.postimg.cc/DZYTGTPp/p-1962grit21.jpg","https://i.postimg.cc/T1LXq4kd/p-1962zgkj21.jpg"]
-         var result = data[Math.floor(Math.random() * data.length)];
-         var requestSettings = {
-      url: result,
-      method: 'GET',
-      encoding: null
-   };
-   request(requestSettings, function(error, response, body) {
-      res.set('Content-Type', 'image/png');
-      res.send(body);
-   });
-} else {
-  res.json(loghandler.apikey)
-}
-})
-
-//downloader
+// Downloader
 router.get('/download/facebook', async (req, res, next) => {
-          var apikey = req.query.apikey
-          var url = req.query.url
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter url"})
-        if(listkey.includes(apikey)){
-        const result = await scr.savefrom(url)
-             res.json({
-                 result
-             })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
+	var url = req.query.url
+	if (!url) return res.json(mess.noturl)
+	let data = await fetchJson(`https://xorizn-downloads.vercel.app/api/downloads/facebook?url=${url}`)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
 })
-} else {
-  res.json(loghandler.apikey)
-}
-})
-router.get('/download/instagram', async (req, res, next) => {
-          var apikey = req.query.apikey
-          var url = req.query.url
-       	if(!apikey) return res.json(loghandler.noapikey)
-       if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter username"})
-        if(listkey.includes(apikey)){
-       let iglu = await scr.instagramdl(url).catch(async _ => await scr.instagramdlv2(url)).catch(async _ => await scr.instagramdlv3(url)).catch(async _ => await scr.instagramdlv4(url))
-		var result = iglu;
-		res.json({
-			result
-		})
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
-})
-} else {
-  res.json(loghandler.apikey)
-}
-})
-router.get('/download/pinterest', async (req, res, next) => {
-          var apikey = req.query.apikey
-          var url = req.query.q
-       	if(!apikey) return res.json(loghandler.noapikey)
-       if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter q"})
-        if(listkey.includes(apikey)){
-       scr.pinterest(url)
-	.then(data => {
-		var result = data;
-		res.json({
-			result
-		})
-		})
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
-})
-} else {
-  res.json(loghandler.apikey)
-}
+router.get('/download/mediafire', async (req, res, next) => {
+	var url = req.query.url
+	if (!url) return res.json(mess.noturl)
+	let data = await fetchJson(`https://xorizn-downloads.vercel.app/api/downloads/mediafire?url=${url}`)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
 })
 router.get('/download/tiktok', async (req, res, next) => {
-          var apikey = req.query.apikey
-          var url = req.query.url
-       	if(!apikey) return res.json(loghandler.noapikey)
-       if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter url"})
-        if(listkey.includes(apikey)){
-       let ttlu = await scr.tiktokdl(url).catch(async _ => await scr.tiktokdlv2(url))
-		var result = ttlu;
-		res.json({
-			result
-		})
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
+	var url = req.query.url
+	if (!url) return res.json(mess.noturl)
+	let data = await fetchJson(`https://xorizn-downloads.vercel.app/api/downloads/tiktok?url=${url}`)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
 })
-} else {
-  res.json(loghandler.apikey)
-}
+router.get('/download/soundcloud', async (req, res, next) => {
+	var url = req.query.url
+	if (!url) return res.json(mess.noturl)
+	let data = await fetchJson(`https://xorizn-downloads.vercel.app/api/downloads/soundcloud?url=${url}`)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
+})
+router.get('/download/twitter', async (req, res, next) => {
+	var url = req.query.url
+	if (!url) return res.json(mess.noturl)
+	let data = await fetchJson(`https://xorizn-downloads.vercel.app/api/downloads/twitter?url=${url}`)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
+})
+router.get('/download/play', async (req, res, next) => {
+	var query = req.query.q
+	if (!query) return res.json(mess.notquery)
+	let data = await api.downloader.yt.play(query)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
 })
 router.get('/download/ytmp3', async (req, res, next) => {
-          var apikey = req.query.apikey
-          var url = req.query.url
-       	if(!apikey) return res.json(loghandler.noapikey)
-       if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter url"})
-        if(listkey.includes(apikey)){
-const { id, thumbnail, audio: _audio, title } = await scr.youtubedlv2(url)
-try {
-for (let i in _audio) {
-audio = _audio[i]
-let kin = await audio.download()
-		res.json({
-			id: id,
-			thumbnail: thumbnail,
-			title: title,
-			size: audio.fileSize,
-			download: kin
+	var url = req.query.url
+	if (!url) return res.json(mess.noturl)
+	let data = await api.downloader.yt.mp3(url)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
 })
-		}} catch {
-         	console.log(e);
-         	res.json(loghandler.error)
-}
-} else {
-  res.json(loghandler.apikey)
-}
-})
-
 router.get('/download/ytmp4', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var url = req.query.url
-       	if(!apikey) return res.json(loghandler.noapikey)
-       if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter url"})
-        if(listkey.includes(apikey)){
-       const { id, thumbnail, video: _video, title } = await scr.youtubedlv2(url)
-try{
-for (let i in _video) {
-video = _video[i]
-let kin = await video.download()
-		res.json({
-			id: id,
-			thumbnail: thumbnail,
-			title: title,
-			size: video.fileSize,
-			download: kin
-		})
-		}} catch {
-         	console.log(e);
-         	res.json(loghandler.error)
-}
-} else {
-  res.json(loghandler.apikey)
-}
-})
-// news
-router.get('/news/cnn', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var url = req.query.type
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://news-api-zhirrr.vercel.app/v1/cnn-news`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-             res.json({
-                 result
-             })
-         })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
-})
-} else {
-  res.json(loghandler.apikey)
-}
-})
-router.get('/news/cnbc', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var url = req.query.type
-       	if(!apikey) return res.json(loghandler.noapikey)
-       if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://news-api-zhirrr.vercel.app/v1/cnbc-news`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-             res.json({
-                 result
-             })
-         })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
-})
-} else {
-  res.json(loghandler.apikey)
-}
-})
-router.get('/news/republika', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var url = req.query.type
-       	if(!apikey) return res.json(loghandler.noapikey)
-       if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://news-api-zhirrr.vercel.app/v1/republika-news`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-             res.json({
-                 result
-             })
-         })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
-})
-} else {
-  res.json(loghandler.apikey)
-}
-})
-router.get('/news/tempo', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var url = req.query.type
-       	if(!apikey) return res.json(loghandler.noapikey)
-       if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter type"})      
-       if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://news-api-zhirrr.vercel.app/v1/tempo-news/${url}`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-             res.json({
-             	author: 'Zeeone',
-                 result
-             })
-         })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
-})
-} else {
-  res.json(loghandler.apikey)
-}
-})
-router.get('/news/antara', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var url = req.query.type
-       	if(!apikey) return res.json(loghandler.noapikey)
-       if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter type"})      
-       if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://news-api-zhirrr.vercel.app/v1/antara-news/${url}`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-             res.json({
-             	author: 'Zeeone',
-                 result
-             })
-         })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
-})
-} else {
-  res.json(loghandler.apikey)
-}
-})
-router.get('/news/kumparan', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var url = req.query.type
-       	if(!apikey) return res.json(loghandler.noapikey)
-         if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://news-api-zhirrr.vercel.app/v1/kumparan-news`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-             res.json({
-             	author: 'Zeeone',
-                 result
-             })
-         })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
-})
-} else {
-  res.json(loghandler.apikey)
-}
+	var url = req.query.url
+	if (!url) return res.json(mess.noturl)
+	let data = await api.downloader.yt.mp4(url)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
 })
 
-//photooxy
-router.get('/photooxy/flaming', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.text
-       	if(!apikey) return res.json(loghandler.noapikey)
-       if (!text) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter text"})      
-         if(listkey.includes(apikey)){
-       oxy("https://photooxy.com/logo-and-text-effects/realistic-flaming-text-effect-online-197.html", [text])
-.then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-.catch((err) =>{
- res.json(loghandler.error)
-})
-} else {
-  res.json(loghandler.apikey)
-}
-})
-router.get('/photooxy/shadow-sky', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.text
-       	if(!apikey) return res.json(loghandler.noapikey)
-       if (!text) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter text"})      
-         if(listkey.includes(apikey)){
-       oxy("https://photooxy.com/logo-and-text-effects/shadow-text-effect-in-the-sky-394.html", [text])
-.then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-.catch((err) =>{
- res.json(loghandler.error)
-})
-} else {
-  res.json(loghandler.apikey)
-}
-})
-router.get('/photooxy/metallic', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.text
-       	if(!apikey) return res.json(loghandler.noapikey)
-       if (!text) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter text"})      
-         if(listkey.includes(apikey)){
-       oxy("https://photooxy.com/other-design/create-metallic-text-glow-online-188.html", [text])
-.then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-.catch((err) =>{
- res.json(loghandler.error)
-})
-} else {
-  res.json(loghandler.apikey)
-}
-})
-router.get('/photooxy/naruto', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.text
-       	if(!apikey) return res.json(loghandler.noapikey)
-       if (!text) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter text"})      
-         if(listkey.includes(apikey)){
-       oxy("https://photooxy.com/manga-and-anime/make-naruto-banner-online-free-378.html", [text])
-.then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-.catch((err) =>{
- res.json(loghandler.error)
-})
-} else {
-  res.json(loghandler.apikey)
-}
-})
-router.get('/photooxy/pubg-mobile', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.text
-       var text2 = req.query.text
-       	if(!apikey) return res.json(loghandler.noapikey)
-       if (!text || !text2) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter text & text2"})      
-         if(listkey.includes(apikey)){
-       oxy("https://photooxy.com/battlegrounds/make-wallpaper-battlegrounds-logo-text-146.html", [text,text2])
-.then((data) =>{ 
-	res.set({'Content-Type': 'image/png'})
-	res.send(data)
-	})
-.catch((err) =>{
- res.json(loghandler.error)
-})
-} else {
-  res.json(loghandler.apikey)
-}
-})
+//-----------------------------------------------------------------
 
-// search api
-router.get('/search/google-image', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.query
-       	if(!apikey) return res.json(loghandler.noapikey)
-       if (!text) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter query"})      
-         if(listkey.includes(apikey)){
-       scr.googleImage(text).then(data => {
-        var data = data;
-             res.json({
-             	status: 200,
-             	data,
-             })
-         })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
-})
-} else {
-  res.json(loghandler.apikey)
-}
-})
+// Search
+
 router.get('/search/wallpaper', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.query
-       	if(!apikey) return res.json(loghandler.noapikey)
-       if (!text) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter query"})      
-         if(listkey.includes(apikey)){
-       scr.wallpaper(text)
-	.then(data => {
-		var result = data;
-		res.json({
-			result
-		})
-		})
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
-})
-} else {
-  res.json(loghandler.apikey)
-}
+	var query = req.query.q
+	if (!query) return res.json(mess.notquery)
+	let data = await lolkilScraper.image.wallpaperflare(query)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
 })
 router.get('/search/pinterest', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.query
-       	if(!apikey) return res.json(loghandler.noapikey)
-       if (!text) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter query"})      
-         if(listkey.includes(apikey)){
-       scr.pinterest(text)
-	.then(data => {
-		var result = data;
-		res.json({
-			result
-		})
-		})
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
+	var query = req.query.q
+	if (!query) return res.json(mess.notquery)
+	let data = await api.search.pin(query)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data
+	})
 })
-} else {
-  res.json(loghandler.apikey)
-}
+router.get('/search/danbooru', async (req, res, next) => {
+	var query = req.query.q
+	if (!query) return res.json(mess.notquery)
+	let data = await danbooru.search(query)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data
+	})
 })
+router.get('/search/unplash', async (req, res, next) => {
+	var query = req.query.q
+	if (!query) return res.json(mess.notquery)
+	let data = await unsplash.search(query)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data
+	})
+})
+router.get('/search/music', async (req, res, next) => {
+	var query = req.query.q
+	if (!query) return res.json(mess.notquery)
+	let data = await music.search(query)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data
+	})
+})
+router.get('/search/wikimedia', async (req, res, next) => {
+	var query = req.query.q
+	if (!query) return res.json(mess.notquery)
+	let data = await search.WikiMedia(query)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
+})
+router.get('/search/soundcloud', async (req, res, next) => {
+	var query = req.query.q
+	if (!query) return res.json(mess.notquery)
+	let data = await search.SoundCloude(query)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
+})
+router.get('/search/ringtone', async (req, res, next) => {
+	var query = req.query.q
+	if (!query) return res.json(mess.notquery)
+	let data = await search.RingTone(query)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
+})
+router.get('/search/playstore', async (req, res, next) => {
+	var query = req.query.q
+	if (!query) return res.json(mess.notquery)
+	let data = await search.PlayStore(query)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
+})
+router.get('/search/lirik', async (req, res, next) => {
+	var query = req.query.q
+	if (!query) return res.json(mess.notquery)
+	let data = await search.Lirik(query)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
+})
+router.get('/search/kodepos', async (req, res, next) => {
+	var query = req.query.q
+	if (!query) return res.json(mess.notquery)
+	let data = await search.KodePos(query)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
+})
+router.get('/search/bukalapak', async (req, res, next) => {
+	var query = req.query.q
+	if (!query) return res.json(mess.notquery)
+	let data = await search.BukaLapak(query)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
+})
+router.get('/search/acaranow', async (req, res, next) => {
+	let data = await search.AcaraNow()
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
+})
+router.get('/search/sepakbola', async (req, res, next) => {
+	let data = await fetchJson(`https://xorizn-search.vercel.app/api/tv/sepakbola`)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
+})
+router.get('/search/jadwaltv', async (req, res, next) => {
+  var query = req.query.q
+	if (!query) return res.json(mess.notquery)
+	let data = await search.JadwalTV(query);
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
+})
+router.get('/search/heroml', async (req, res, next) => {
+	var query = req.query.q
+	if (!query) return res.json(mess.notquery)
+	let data = await search.Hero(query); 
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
+})
+//----------------------------------------------------------
 
-//nsfw
-router.get('/nsfw/ass', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.page
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://raw.githubusercontent.com/danzzcoding/data-danzzapi.xyz/main/nsfw/ass.json`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-        var result = data[Math.floor(Math.random() * data.length)];
-var requestSettings = {
-      url: result.url,
-      method: 'GET',
-      encoding: null
-   };
-   request(requestSettings, function(error, response, body) {
-      res.set('Content-Type', 'image/png');
-      res.send(body);
-   });
-   })
-} else {
-  res.json(loghandler.apikey)
-}
+// News
+router.get('/news/gempa', async (req, res, next) => {
+	let data = await news.Gempa();
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
 })
-router.get('/nsfw/ahegao', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.page
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://raw.githubusercontent.com/danzzcoding/data-danzzapi.xyz/main/nsfw/ahegao.json`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-        var result = data[Math.floor(Math.random() * data.length)];
-             var requestSettings = {
-      url: result.url,
-      method: 'GET',
-      encoding: null
-   };
-   request(requestSettings, function(error, response, body) {
-      res.set('Content-Type', 'image/png');
-      res.send(body);
-   });})
-} else {
-  res.json(loghandler.apikey)
-}
+router.get('/news/gempa2', async (req, res, next) => {
+	let data = await news.Gempa2();
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
 })
-router.get('/nsfw/bdsm', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.page
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://raw.githubusercontent.com/danzzcoding/data-danzzapi.xyz/main/nsfw/bdsm.json`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-        var result = data[Math.floor(Math.random() * data.length)];
-             var requestSettings = {
-      url: result.url,
-      method: 'GET',
-      encoding: null
-   };
-   request(requestSettings, function(error, response, body) {
-      res.set('Content-Type', 'image/png');
-      res.send(body);
-   });})
-} else {
-  res.json(loghandler.apikey)
-}
+router.get('/news/kompas-global', async (req, res, next) => {
+	let data = await news.KompasGlobal();
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
 })
-router.get('/nsfw/blowjob', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.page
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://raw.githubusercontent.com/danzzcoding/data-danzzapi.xyz/main/nsfw/blowjob.json`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-        var result = data[Math.floor(Math.random() * data.length)];
-             var requestSettings = {
-      url: result.url,
-      method: 'GET',
-      encoding: null
-   };
-   request(requestSettings, function(error, response, body) {
-      res.set('Content-Type', 'image/png');
-      res.send(body);
-   });})
-} else {
-  res.json(loghandler.apikey)
-}
+router.get('/news/kompas-news', async (req, res, next) => {
+	let data = await news.KompasNews();
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
 })
-router.get('/nsfw/cuckold', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.page
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://raw.githubusercontent.com/danzzcoding/data-danzzapi.xyz/main/nsfw/cuckold.json`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-        var result = data[Math.floor(Math.random() * data.length)];
-             var requestSettings = {
-      url: result.url,
-      method: 'GET',
-      encoding: null
-   };
-   request(requestSettings, function(error, response, body) {
-      res.set('Content-Type', 'image/png');
-      res.send(body);
-   });})
-} else {
-  res.json(loghandler.apikey)
-}
+router.get('/news/kompas-populer', async (req, res, next) => {
+	let data = await news.KompasTerpopuler();
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
 })
-router.get('/nsfw/cum', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.page
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://raw.githubusercontent.com/ArifzynXD/data-arifzyn-api.my.id/master/nsfw/cum.json`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-        var result = data[Math.floor(Math.random() * data.length)];
-             var requestSettings = {
-      url: result.url,
-      method: 'GET',
-      encoding: null
-   };
-   request(requestSettings, function(error, response, body) {
-      res.set('Content-Type', 'image/png');
-      res.send(body);
-   });})
-} else {
-  res.json(loghandler.apikey)
-}
+router.get('/news/rumahkeadilan', async (req, res, next) => {
+	let data = await news.RumahKeadilan();
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
 })
+router.get('/news/tixid', async (req, res, next) => {
+	let data = await news.TixID();
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
+})
+//-----------------------------------------------------------------
 
+// Maker
+router.get('/stalk/instagram', async (req, res, next) => {
+	var query = req.query.q
+	if (!query) return res.json(mess.notquery)
+	let data = await stalk.instagram('profile', `${query}`)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
+})
+//-----------------------------------------------------------------
 
-// islamic
-router.get('/islam/tahlil', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.page
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://raw.githubusercontent.com/zeeone-ofc/My-SQL-Results/master/data/dataTahlil.json`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-             res.json({
-                 result
-             })
-         })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
+// Tools
+router.get('/tools/ssweb', async (req, res, next) => {
+    var url = req.query.url
+    if (!url) return res.json(mess.noturl)
+    var result = await getBuffer(`https://my-api.claraaaaaaa1909.repl.co/api/other/ssweb?url=${url}&apikey=Unlimited`)
+        res.set('Content-Type', 'image/png');
+        res.send(result);
+    })
+router.get('/tools/chatgpt', async (req, res, next) => {
+	var query = req.query.q
+	if (!query) return res.json(mess.notquery)
+	let data = await ChatGpt(query)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data
+	})
 })
-} else {
-  res.json(loghandler.apikey)
-}
+router.get('/tools/animedif', async (req, res, next) => {
+	var query = req.query.q
+	if (!query) return res.json(mess.notquery)
+	let data = await animedif(query)
+        res.set('Content-Type', 'image/png');
+        res.send(data);
+    })
+router.get('/tools/blur', async (req, res, next) => {
+    var url = req.query.url
+    if (!url) return res.json(mess.noturl)
+    var result = await getBuffer(`https://vihangayt.me/maker/blur?url=${url}`)
+        res.set('Content-Type', 'image/png');
+        res.send(result);
+    })
+router.get('/tools/remini', async (req, res, next) => {
+    var url = req.query.url
+    if (!url) return res.json(mess.noturl)
+    var result = await getBuffer(`https://vihangayt.me/tools/enhance?url=${url}`)
+        res.set('Content-Type', 'image/png');
+        res.send(result);
+    })
+router.get('/tools/translate', async (req, res, next) => {
+	var query = req.query.q
+  var lang = req.query.lang
+	if (!query) return res.json(mess.notquery)
+	if (!lang) return res.json('input lang')
+	let data = await api.other.translate(query, lang)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
 })
-router.get('/islam/wirid', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.page
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://raw.githubusercontent.com/zeeone-ofc/My-SQL-Results/master/data/dataWirid.json`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-             res.json({
-                 result
-             })
-         })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
+router.get('/tools/gtts', async (req, res, next) => {
+	var query = req.query.q
+  var lang = req.query.lang
+	if (!query) return res.json(mess.notquery)
+	if (!lang) return res.json('input lang')
+	let data = await lolkilScraper.convert.gtts(query, lang)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
 })
-} else {
-  res.json(loghandler.apikey)
-}
+router.get('/tools/removebg', async (req, res, next) => {
+    var url = req.query.url
+    if (!url) return res.json(mess.noturl)
+    var result = await getBuffer(`https://removebg.api.akuari.my.id/other/removebgg?gambar=${url}`)
+        res.set('Content-Type', 'image/png');
+        res.send(result);
+    })
+router.get('/tools/chara-genshin', async (req, res, next) => {
+	var query = req.query.q
+	if (!query) return res.json(mess.notquery)
+	let data = await fetchJson(`https://genshin-db-api.vercel.app/api/characters?query=${query}&queryLanguages=English&resultLanguage=English`)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data
+	})
 })
-router.get('/islam/ayatkursi', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.page
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://raw.githubusercontent.com/zeeone-ofc/My-SQL-Results/master/data/dataAyatKursi.json`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-             res.json({
-                 result
-             })
-         })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
+// Ramdom
+router.get('/random/nekopoi', async (req, res, next) => {
+	let data = await fetchJson(`https://xorizn-apis-v1.vercel.app/api/random/nekopoi`)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
 })
-} else {
-  res.json(loghandler.apikey)
-}
+router.get('/random/quotes-anime', async (req, res, next) => {
+	let data = await fetchJson(`https://xorizn-apis-v1.vercel.app/api/random/quotes-anime`)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
 })
-router.get('/islam/doaharian', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.page
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://raw.githubusercontent.com/zeeone-ofc/My-SQL-Results/master/data/dataDoaHarian.json`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-             res.json({
-                 result
-             })
-         })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
+router.get('/random/anime', async (req, res, next) => {
+	let data = await fetchJson(`https://xorizn-apis-v1.vercel.app/api/random/waifu?type=sfw`)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
 })
-} else {
-  res.json(loghandler.apikey)
-}
+router.get('/random/nsfw', async (req, res, next) => {
+	let data = await fetchJson(`https://xorizn-apis-v1.vercel.app/api/random/waifu?type=nsfw`)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
 })
-router.get('/islam/bacaanshalat', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.page
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://raw.githubusercontent.com/zeeone-ofc/My-SQL-Results/master/data/dataBacaanShalat.json`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-             res.json({
-                 result
-             })
-         })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
+router.get('/random/hentai', async (req, res, next) => {
+	let data = await fetchJson(`https://xorizn-apis-v1.vercel.app/api/random/hentai`)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
 })
-} else {
-  res.json(loghandler.apikey)
-}
+router.get('/random/pornhub', async (req, res, next) => {
+	let data = await lolkilScraper.pornhub.video()
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.result
+	})
 })
-router.get('/islam/niatshalat', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.page
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://raw.githubusercontent.com/zeeone-ofc/My-SQL-Results/master/data/dataNiatShalat.json`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-             res.json({
-                 result
-             })
-         })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
+router.get('/random/neko', async (req, res, next) => {
+    const data = JSON.parse(fs.readFileSync(__path +'/database/anime/neko.json'));
+    var result = data[Math.floor(Math.random() * data.length)];
+    var requestSettings = {
+        url: result,
+        method: 'GET',
+        encoding: null
+    };
+    request(requestSettings, function (error, response, body) {
+        res.set('Content-Type', 'image/png');
+        res.send(body);
+    })
 })
-} else {
-  res.json(loghandler.apikey)
-}
+router.get('/random/cosplay', async (req, res, next) => {
+    const data = JSON.parse(fs.readFileSync(__path +'/database/anime/cosplay.json'));
+    var result = data[Math.floor(Math.random() * data.length)];
+    var requestSettings = {
+        url: result,
+        method: 'GET',
+        encoding: null
+    };
+    request(requestSettings, function (error, response, body) {
+        res.set('Content-Type', 'image/png');
+        res.send(body);
+    })
 })
-router.get('/islam/kisahnabi', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.page
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://raw.githubusercontent.com/zeeone-ofc/My-SQL-Results/master/data/dataKisahNabi.json`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-             res.json({
-                 result
-             })
-         })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
+router.get('/random/husbu', async (req, res, next) => {
+    const data = JSON.parse(fs.readFileSync(__path +'/database/anime/husbu.json'));
+    var result = data[Math.floor(Math.random() * data.length)];
+    var requestSettings = {
+        url: result,
+        method: 'GET',
+        encoding: null
+    };
+    request(requestSettings, function (error, response, body) {
+        res.set('Content-Type', 'image/png');
+        res.send(body);
+    })
 })
-} else {
-  res.json(loghandler.apikey)
-}
+router.get('/random/icon', async (req, res, next) => {
+    const data = JSON.parse(fs.readFileSync(__path +'/database/anime/icon.json'));
+    var result = data[Math.floor(Math.random() * data.length)];
+    var requestSettings = {
+        url: result,
+        method: 'GET',
+        encoding: null
+    };
+    request(requestSettings, function (error, response, body) {
+        res.set('Content-Type', 'image/png');
+        res.send(body);
+    })
 })
-router.get('/islam/asmaulhusna', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.page
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://raw.githubusercontent.com/zeeone-ofc/My-SQL-Results/master/data/dataAsmaulHusna.json`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-             res.json({
-                 result
-             })
-         })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
+router.get('/random/neko', async (req, res, next) => {
+    const data = JSON.parse(fs.readFileSync(__path +'/database/anime/loli.json'));
+    var result = data[Math.floor(Math.random() * data.length)];
+    var requestSettings = {
+        url: result,
+        method: 'GET',
+        encoding: null
+    };
+    request(requestSettings, function (error, response, body) {
+        res.set('Content-Type', 'image/png');
+        res.send(body);
+    })
 })
-} else {
-  res.json(loghandler.apikey)
-}
+router.get('/random/waifu', async (req, res, next) => {
+    const data = JSON.parse(fs.readFileSync(__path +'/database/anime/waifu.json'));
+    var result = data[Math.floor(Math.random() * data.length)];
+    var requestSettings = {
+        url: result,
+        method: 'GET',
+        encoding: null
+    };
+    request(requestSettings, function (error, response, body) {
+        res.set('Content-Type', 'image/png');
+        res.send(body);
+    })
 })
-router.get('/islam/niatsubuh', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.page
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://raw.githubusercontent.com/zeeone-ofc/My-SQL-Results/master/data/NiatShubuh.json`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-             res.json({
-                 result
-             })
-         })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
-})
-} else {
-  res.json(loghandler.apikey)
-}
-})
-router.get('/islam/niatzuhur', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.page
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://raw.githubusercontent.com/zeeone-ofc/My-SQL-Results/master/data/NiatDzuhur.json`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-             res.json({
-                 result
-             })
-         })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
-})
-} else {
-  res.json(loghandler.apikey)
-}
-})
-router.get('/islam/niatmagrib', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.page
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://raw.githubusercontent.com/zeeone-ofc/My-SQL-Results/master/data/NiatMaghrib.json`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-             res.json({
-                 result
-             })
-         })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
-})
-} else {
-  res.json(loghandler.apikey)
-}
-})
-router.get('/islam/niatisya', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.page
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://raw.githubusercontent.com/Zhirrr/My-SQL-Results/main/data/NiatIsya.json`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-             res.json({
-                 result
-             })
-         })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
-})
-} else {
-  res.json(loghandler.apikey)
-}
-})
-router.get('/islam/niatashar', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.page
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://raw.githubusercontent.com/zeeone-ofc/My-SQL-Results/master/data/NiatAshar.json`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-             res.json({
-                 result
-             })
-         })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
-})
-} else {
-  res.json(loghandler.apikey)
-}
-})
+//--------------------------------------------------------------------
 
-//game
+// Game
+router.get('/game/asahotak', async (req, res, next) => {
+        var soal = JSON.parse(
+            fs.readFileSync(__path + '/database//game/asahotak.json')
+        )
+        res.json({
+              status: true,
+	            author: `${author}`,
+              ...soal[~~(Math.random() * soal.length)]
+          })
+})
+router.get('/game/caklontong', async (req, res, next) => {
+        var soal = JSON.parse(
+            fs.readFileSync(__path + '/database/game/caklontong.json')
+        )
+        res.json({
+              status: true,
+	            author: `${author}`,
+              ...soal[~~(Math.random() * soal.length)]
+          })
+})
+router.get('/game/family100', async (req, res, next) => {
+        var soal = JSON.parse(
+            fs.readFileSync(__path + '/database/game/family100.json')
+        )
+        res.json({
+              status: true,
+	            author: `${author}`,
+              ...soal[~~(Math.random() * soal.length)]
+          })
+})
+router.get('/game/lengkapikalimat', async (req, res, next) => {
+        var soal = JSON.parse(
+            fs.readFileSync(__path + '/database/game/lengkapikalimat.json')
+        )
+        res.json({
+              status: true,
+	            author: `${author}`,
+              ...soal[~~(Math.random() * soal.length)]
+          })
+})
+router.get('/game/siapakahaku', async (req, res, next) => {
+        var soal = JSON.parse(
+            fs.readFileSync(__path + '/database/game/siapakahaku.json')
+        )
+        res.json({
+              status: true,
+	            author: `${author}`,
+              ...soal[~~(Math.random() * soal.length)]
+          })
+})
+router.get('/game/susunkata', async (req, res, next) => {
+        var soal = JSON.parse(
+            fs.readFileSync(__path + '/database/game/susunkata.json')
+        )
+        res.json({
+              status: true,
+	            author: `${author}`,
+              ...soal[~~(Math.random() * soal.length)]
+          })
+})
+router.get('/game/tebakchara', async (req, res, next) => {
+        var soal = JSON.parse(
+            fs.readFileSync(__path + '/database/game/tebakchara.json')
+        )
+        res.json({
+              status: true,
+	            author: `${author}`,
+              ...soal[~~(Math.random() * soal.length)]
+          })
+})
 router.get('/game/tebakgambar', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.page
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-       scr.tebakgambar()
-	.then(data => {
-		var result = data;
-		res.json({
-			result
-		})
-		})
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
+        var soal = JSON.parse(
+            fs.readFileSync(__path + '/database/game/asahotak.json')
+        )
+        res.json({
+              status: true,
+	            author: `${author}`,
+              ...soal[~~(Math.random() * soal.length)]
+          })
 })
-} else {
-  res.json(loghandler.apikey)
-}
+router.get('/game/tebakgame', async (req, res, next) => {
+        var soal = JSON.parse(
+            fs.readFileSync(__path + '/database/game/tebakgame.json')
+        )
+        res.json({
+              status: true,
+	            author: `${author}`,
+              ...soal[~~(Math.random() * soal.length)]
+          })
 })
+//---------------------------------------------------------------------
 
-// other
-router.get('/other/github-stalk', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.username
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(!text) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter username"})
-        if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://github-api-zhirrr.vercel.app/api/detailuser?q=${text}`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-             res.json({
-             	author: 'Zeeone',
-                 result
-             })
-         })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
-})
-} else {
-  res.json(loghandler.apikey)
-}
-})
-router.get('/other/hilih', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.kata
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(!text) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter kata"})
-        if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://hilih-api-zhirrr.vercel.app/api/hilih?kata=${text}`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-             res.json({
-                 result
-             })
-         })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
-})
-} else {
-  res.json(loghandler.apikey)
-}
-})
-router.get('/other/kodepos', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.kota
-       	if(!apikey) return res.json(loghandler.noapikey)
-       if(!text) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter kota"})
-        if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://kodepos-api-zhirrr.vercel.app/?q=${text}`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-             res.json({
-                 result
-             })
-         })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
-})
-} else {
-  res.json(loghandler.apikey)
-}
-})
-router.get('/other/covid-world', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.kata
-       	if(!apikey) return res.json(loghandler.noapikey)
-        if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://covid19-api-zhirrr.vercel.app/api/world`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-             res.json({
-                 result
-             })
-         })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
-})
-} else {
-  res.json(loghandler.apikey)
-}
-})
-router.get('/other/kbbi', async (req, res, next) => {
-          var apikey = req.query.apikey
-       	var text = req.query.kata
-       	if(!apikey) return res.json(loghandler.noapikey)
-       if(!text) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter kata"})
-        if(listkey.includes(apikey)){
-       fetch(encodeURI(`https://kbbi-api-zhirrr.vercel.app/api/kbbi?text=${text}`))
-        .then(response => response.json())
-        .then(data => {
-        var result = data;
-             res.json({
-                 result
-             })
-         })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
-})
-} else {
-  res.json(loghandler.apikey)
-}
-})
+//Maker
+router.get("/maker/tolol", async (req, res, next) => {
+    const query = req.query.q
+    if (!query) return res.json(msg.notquery)
+	  let hasil = await getBuffer(`https://tolol.ibnux.com/img.php?nama=${query}`)
+		res.set({'Content-Type': 'image/png'})
+	  res.send(hasil)
+	})
+router.get("/maker/attp", async (req, res, next) => {
+    const query = req.query.q
+    if (!query) return res.json(msg.notquery)
+	  let hasil = await getBuffer(`https://api.erdwpe.com/api/maker/attp?text=${query}`)
+		res.set({'Content-Type': 'image/gif'})
+	  res.send(hasil)
+	})
+router.get("/maker/ttp", async (req, res, next) => {
+    const query = req.query.q
+    if (!query) return res.json(msg.notquery)
+	  let hasil = await getBuffer(`https://huratera.sirv.com/PicsArt_08-01-10.00.42.png?profile=Example-Text&text.0.text=${encodeURIComponent(query)}&text.0.color=ffffff&text.0.background.color=0000ff&text.0.font.family=Changa%20One&&text.0.outline.color=0000`)
+		res.set({'Content-Type': 'image/png'})
+	  res.send(hasil)
+	})
+router.get("/maker/ttp2", async (req, res, next) => {
+    const query = req.query.q
+    if (!query) return res.json(msg.notquery)
+	  let hasil = await getBuffer(`https://huratera.sirv.com/PicsArt_08-01-10.00.42.png?profile=Example-Text&text.0.text=${encodeURIComponent(query)}&text.0.opacity=93&text.0.outline.color=fff40a&text.0.outline.width=4&text.0.color=000000&text.0.font.family=Permanent%20Marker&text.0.background.color=ffffff`)
+		res.set({'Content-Type': 'image/png'})
+	  res.send(hasil)
+	})
+//-------------------------------------------------------------------
 
+// Others
+router.get('/others/kisahnabi', async (req, res, next) => {
+	var query = req.query.q
+	if (!query) return res.json(mess.notquery)
+	let data = await fetchJson(`https://raw.githubusercontent.com/ZeroChanBot/Api-Freee/a9da6483809a1fbf164cdf1dfbfc6a17f2814577/data/kisahNabi/${query}.json`) 
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data
+	})
+})
+router.get('/others/simi', async (req, res, next) => {
+	var query = req.query.q
+	if (!query) return res.json(mess.notquery)
+	let data = await fetchJson(`https://my-api.claraaaaaaa1909.repl.co/api/other/simi?kata=${query}&apikey=Sange`)
+	res.json({
+	status: true,
+	author: `${author}`,
+	result: data.message
+	})
+})
 module.exports = router

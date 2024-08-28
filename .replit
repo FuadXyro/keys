@@ -1,7 +1,7 @@
 entrypoint = "index.js"
 
 hidden = [".config", "package-lock.json"]
-run = "npm install && npm start"
+run = "npm start"
 
 [[hints]]
 regex = "Error \\[ERR_REQUIRE_ESM\\]"
@@ -11,7 +11,7 @@ message = "We see that you are using require(...) inside your code. We currently
 channel = "stable-22_11"
 
 [env]
-XDG_CONFIG_HOME = "/home/runner/.config"
+XDG_CONFIG_HOME = "/home/runner/$REPL_SLUG/.config"
 PATH = "/home/runner/$REPL_SLUG/.config/npm/node_global/bin:/home/runner/$REPL_SLUG/node_modules/.bin"
 npm_config_prefix = "/home/runner/$REPL_SLUG/.config/npm/node_global"
 
@@ -72,11 +72,10 @@ support = true
 [languages]
 
 [languages.javascript]
-pattern = "**/{*.js,*.jsx,*.ts,*.tsx}"
+pattern = "**/{*.js,*.jsx,*.ts,*.tsx,*.json}"
 
 [languages.javascript.languageServer]
 start = "typescript-language-server --stdio"
 
-[[ports]]
-localPort = 8080
-externalPort = 80
+[deployment]
+run = ["sh", "-c", "node index.js"]
